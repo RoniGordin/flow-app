@@ -2,7 +2,7 @@ import { Button, Icon, IconProps, Layout } from '@ui-kitten/components';
 import React from 'react';
 import { StyleSheet, Linking } from 'react-native';
 import { View } from '../components/Themed';
-import { Text, Divider } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 import OrderProgress from '../components/OrderProgress';
 
 interface Props {
@@ -33,7 +33,6 @@ export default function OrderStatusScreen(props: Props) {
 	return (
 		<Layout style={styles.container}>
 			<Text style={styles.title} category='h1'>Order Status</Text>
-			<Divider/>
             <OrderProgress timeLeft={timeLeft} orderTime={orderTime}/>
 			<View style={styles.actionsContainer}>
 				<Button
