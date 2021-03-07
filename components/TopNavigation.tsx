@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { useHistory } from "react-router-native";
 
 import { Icon, Layout, TopNavigation, TopNavigationAction, IconProps } from '@ui-kitten/components';
 
@@ -11,9 +12,11 @@ const BackIcon = (props: IconProps) => <Icon {...props} name='arrow-back'/>;
 
 export const TopNavigationAccessoriesShowcase = (props: Props) => {
     const { title } = props;
+    const history = useHistory();
+
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => alert("back")}/>
+    <TopNavigationAction icon={BackIcon} onPress={() => history.goBack()}/>
   );
 
   return (

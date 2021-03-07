@@ -1,8 +1,12 @@
 import React, {Fragment} from 'react';
-import { Button } from '@ui-kitten/components';
 import { StyleSheet, View} from 'react-native';
-import { OrderItem } from '../types';
+import { useHistory } from "react-router-native";
+
+
+import { Button } from '@ui-kitten/components';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
+
+import { OrderItem } from '../types';
 
 import ComponentWrapper from '../components/orderSummary/WrapComponent';
 import CollectionTime from '../components/orderSummary/CollectionTime';
@@ -14,8 +18,9 @@ interface Props {
 }
 
 export default function OrderSummaryScreen(props: Props) {
-	const {
-		orderList
+    const history = useHistory();
+    const {
+        orderList
 	} = props;
 
 	
@@ -27,7 +32,7 @@ export default function OrderSummaryScreen(props: Props) {
         <ComponentWrapper component={<CollectionTime time={6}/>} title='Estimated Collection Time' />
         
         <View style={styles.buttonView}>
-            <Button style={styles.button} onPress={() => alert("asdasd")}>
+            <Button style={styles.button} onPress={() => history.push("status")}>
                 Submit Order
             </Button>
         </View>

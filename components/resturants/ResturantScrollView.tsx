@@ -10,7 +10,7 @@ export const ResturantScrollView = () => {
     return (
         <ScrollView horizontal={true}>
             {dummyData.map((i,index) =>
-                <ResturantCard key={index} name={i} color={dummyColors[index]}/>
+                <ResturantCard key={index} name={i}/>
             )}
         </ScrollView>
     )
