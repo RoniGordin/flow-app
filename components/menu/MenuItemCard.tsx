@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image } from "react-native";
 import { useHistory } from "react-router-native";
 
 import { Card } from '@ui-kitten/components';
@@ -10,14 +10,14 @@ import placehloder from '../../assets/images/placeholder.png';
 interface Props {
 	name : string;
 }
-export const ResturantCard = (props: Props) => {
+export const MenuItemCard = (props: Props) => {
     const { name } = props;
     const history = useHistory();
 
 
   return (
     <React.Fragment>
-      <Card style={styles.card} onPress={() => history.push('menu')}>
+      <Card style={styles.card} onPress={() => history.push('menuItem')}>
         <Image
           style={styles.tinyLogo}
           source={placehloder}
