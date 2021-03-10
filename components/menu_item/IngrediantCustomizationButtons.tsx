@@ -1,25 +1,32 @@
-import React, { Fragment } from 'react';
-import { StyleSheet } from 'react-native';
-import { Button, ButtonGroup, Text } from '@ui-kitten/components';
+import React, { Fragment, useState } from 'react';
+import { Button, ButtonGroup, IndexPath, Select, SelectItem, Text, Toggle } from '@ui-kitten/components';
 
 // This is class is only for the poc, and will be merged with the restaurant area in the future
 
 interface Props {
 	ingrediants: string[];
+    
 }
 
-export default function IngrediantCustomizationButtons(props: Props) {
-	const { ingrediants } = props;
+interface State {
+    ingrediantsSelected: boolean[];
+}
 
-    return (
+export const IngrediantCustomizationButtons = (props: Props) => {    
+        const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>([new IndexPath(0)]);
+        return (
         <Fragment>
-            <ButtonGroup>
-                {ingrediants.map((i,index) =>
-                    <Button key={index}>
-                        {i}
-                    </Button>
-                )}
-            </ButtonGroup>
+            <Select
+                multiSelect={true}
+                selectedIndex={selectedIndex}
+                onSelect={index => setSelectedIndex(index)}>
+                    {props.ingrediants.map((i,index) =>
+                        <SelectItem key={index} title={i}></SelectItem>
+                    )}
+
+            </Select>
+            
         </Fragment>
     );
-}
+            }
+

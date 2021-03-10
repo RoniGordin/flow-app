@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
-import { StyleSheet, Linking, ScrollView } from "react-native";
+import { StyleSheet, Linking, ScrollView, Image } from "react-native";
 import {TopNavigationAccessoriesShowcase} from '../components/TopNavigation';
-import IngrediantCustomizationButtons from "../components/menu_item/IngrediantCustomizationButtons";
-
+import {IngrediantCustomizationButtons} from "../components/menu_item/IngrediantCustomizationButtons";
+import { Button, Card } from "@ui-kitten/components";
 interface Props {
   name: string;
 }
@@ -13,8 +13,11 @@ export default function ResturantMenuScreen(props: Props) {
     const {name} = props;
   return (
     <Fragment>
-      <TopNavigationAccessoriesShowcase title={name} />
+      <Image
+        source={require("../assets/images/placeholder.png")}/>
+      
       <IngrediantCustomizationButtons ingrediants={ingrediants}></IngrediantCustomizationButtons>
+      <Button ></Button>
     </Fragment>
   );
 }
