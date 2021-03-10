@@ -5,20 +5,18 @@ import { Button, ButtonGroup, IndexPath, Select, SelectItem, Text, Toggle } from
 
 interface Props {
 	ingrediants: string[];
-    
-}
-
-interface State {
-    ingrediantsSelected: boolean[];
+    styles: any;
 }
 
 export const IngrediantCustomizationButtons = (props: Props) => {    
-        const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>([new IndexPath(0)]);
+        const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>([]);
         return (
         <Fragment>
             <Select
                 multiSelect={true}
+                style={props.styles}
                 selectedIndex={selectedIndex}
+                placeholder={"Choose ingrediants"}
                 onSelect={index => setSelectedIndex(index)}>
                     {props.ingrediants.map((i,index) =>
                         <SelectItem key={index} title={i}></SelectItem>
