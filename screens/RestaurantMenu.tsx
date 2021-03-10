@@ -13,7 +13,7 @@ export default function ResturantMenuScreen() {
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Menu" />
       <Input
-        placeholder="Search menu"
+        placeholder="🔍Search menu"
         value={value}
         style={styles.searchStyle}
         onChangeText={(nextValue) => setValue(nextValue)}
@@ -22,7 +22,7 @@ export default function ResturantMenuScreen() {
         <MenuArea title="Entrees" />
         <MenuArea title="Main Courses" />
         <MenuArea title="Deserts" />
-        <Button style={styles.button} onPress={() => history.push("/")}>Order item</Button>
+        <Button style={styles.button} onPress={() => history.push("order")}>Finish Order</Button>
 
       </ScrollView>
     </Fragment>

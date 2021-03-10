@@ -11,7 +11,7 @@ export default function ResturantsScreen() {
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Resturants" />
       <Input
-        placeholder="Search resturant"
+        placeholder="🔍Search resturant"
         value={value}
         style={styles.searchStyle}
         onChangeText={(nextValue) => setValue(nextValue)}
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {},
   searchStyle:{
-    padding:10
+    padding:10,
+    textAlign:'center',
   }
 });
