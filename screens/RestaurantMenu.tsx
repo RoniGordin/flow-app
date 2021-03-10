@@ -1,13 +1,14 @@
 import React, {Fragment} from "react";
 import { StyleSheet, Linking, ScrollView } from "react-native";
-import { Input } from "@ui-kitten/components";
+import { Button, Input } from "@ui-kitten/components";
 import MenuArea from '../components/menu/MenuArea';
 import {TopNavigationAccessoriesShowcase} from '../components/TopNavigation';
 import { MenuScrollView } from "../components/menu/MenuScrollView";
+import {useHistory} from 'react-router-native'
 
 export default function ResturantMenuScreen() {
     const [value, setValue] = React.useState('');
-
+    const history = useHistory();
   return (
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Menu" />
@@ -21,6 +22,8 @@ export default function ResturantMenuScreen() {
         <MenuArea title="Entrees" />
         <MenuArea title="Main Courses" />
         <MenuArea title="Deserts" />
+        <Button style={styles.button} onPress={() => history.push("/")}>Order item</Button>
+
       </ScrollView>
     </Fragment>
   );
@@ -36,6 +39,7 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   button: {
+    marginTop:30,
     marginVertical: 2,
   },
   actionsContainer: {},

@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
 import { StyleSheet, Linking, ScrollView, Image } from "react-native";
 import {TopNavigationAccessoriesShowcase} from '../components/TopNavigation';
-import {IngrediantCustomizationButtons} from "../components/menu_item/IngrediantCustomizationButtons";
 import { Button, Card, IndexPath, Select, SelectItem } from "@ui-kitten/components";
+import { useHistory } from 'react-router-native';
 interface Props {
   name: string;
 }
@@ -12,9 +12,11 @@ export default function ResturantMenuScreen(props: Props) {
     const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>([new IndexPath(0)]);
     const ingrediants = ["Tomato","Onions","Banana"]
     const {name} = props;
+    const history = useHistory();
+
   return (
-    
     <Fragment>
+      <TopNavigationAccessoriesShowcase title={"Menu item"}></TopNavigationAccessoriesShowcase>
       <Image
         source={require("../assets/images/placeholder.png")}
         style={styles.itemImage}/>
@@ -28,8 +30,8 @@ export default function ResturantMenuScreen(props: Props) {
                         <SelectItem key={index} title={i}></SelectItem>
                     )}
 
-            </Select>
-      <Button style={styles.button}>Order item</Button>
+      </Select>
+      <Button style={styles.button} onPress={() => history.push("menu")}>Order item</Button>
     </Fragment>
   );
 }
