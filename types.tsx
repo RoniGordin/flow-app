@@ -16,8 +16,11 @@ export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
 
-
 export type OrderItem = {
   name: string;
   price: number;
 };
+
+export type Resturant = {
+  
+}
