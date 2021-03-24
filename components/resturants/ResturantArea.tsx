@@ -8,7 +8,7 @@ interface Props {
 	title: string;
 }
 
-export default function OrderProgress(props: Props) {
+export default function ResturantArea(props: Props) {
 	const { title } = props;
 
     return (

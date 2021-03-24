@@ -1,7 +1,6 @@
-import React, {Fragment} from 'react';
-import { StyleSheet, View} from 'react-native';
-import { useHistory } from "react-router-native";
-
+import React, { Fragment } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useHistory } from 'react-router-native';
 
 import { Button } from '@ui-kitten/components';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
@@ -18,40 +17,41 @@ interface Props {
 }
 
 export default function OrderSummaryScreen(props: Props) {
-    const history = useHistory();
-    const {
-        orderList
-	} = props;
+	const history = useHistory();
+	const { orderList } = props;
 
-	
 	return (
-        <Fragment>
-        <TopNavigationAccessoriesShowcase title='Order Summary' />
-        <PriceTable orderList={orderList}/>
-        <ComponentWrapper component={<ArrivalWay />} title='Arriving Way' />
-        <ComponentWrapper component={<CollectionTime time={6}/>} title='Estimated Collection Time' />
-        
-        <View style={styles.buttonView}>
-            <Button style={styles.button} onPress={() => history.push("status")}>
-                Submit Order
-            </Button>
-        </View>
-    </Fragment>
+		<Fragment>
+			<TopNavigationAccessoriesShowcase title='Order Summary' />
+			<PriceTable orderList={orderList} />
+			<ComponentWrapper component={<ArrivalWay />} title='Arriving Way' />
+			<ComponentWrapper
+				component={<CollectionTime time={6} />}
+				title='Estimated Collection Time'
+			/>
+			<View style={styles.buttonView}>
+				<Button
+					style={styles.button}
+					onPress={() => history.push('status')}
+				>
+					Submit Order
+				</Button>
+			</View>
+		</Fragment>
 	);
 }
 
 const styles = StyleSheet.create({
-    button: {
-        margin: 2,
-        fontSize: 35,
-        backgroundColor:'#F85F6A',
-        borderColor:'#F85F6A'
-    },
-    buttonView: {
-        padding: 30,
-        paddingTop: 80
-    },
-    wrapper: {
-        padding: 85
-    }
+	button: {
+		margin: 2,
+		fontSize: 35,
+		backgroundColor: '#F85F6A',
+		borderColor: '#F85F6A',
+	},
+	buttonView: {
+		padding: 30
+	},
+	wrapper: {
+		padding: 30,
+	},
 });
