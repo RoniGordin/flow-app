@@ -6,7 +6,6 @@ import { NativeRouter, Route } from 'react-router-native';
 import OrderSummaryScreen from '../screens/OrderSummary';
 import ResturantsScreen from '../screens/Resturants';
 import OrderStatusScreen from '../screens/OrderStatus';
-import RestaurantMenuScreen from '../screens/RestaurantMenu';
 import MenuItemScreen from '../screens/MenuItemScreen';
 import ResturantMenuScreen from '../screens/ResturantMenu';
 import BuisnessDetailsScreen from "../screens/BuisnessDetailsScreen";
@@ -39,13 +38,8 @@ export default function AppRouter() {
 					/>
 				)}
 			/>
-			<Route exact path='/menu' component={RestaurantMenuScreen} />
 			<Route exact path='/menuItem' component={MenuItemScreen} />
-			<Route
-				exact
-				path='/'
-				component={ResturantMenuScreen}
-			/>
+			<Route exact path='/menu' component={() => <ResturantMenuScreen isBuisnessMode={false}/>} />
 		</NativeRouter>
 	);
 }
