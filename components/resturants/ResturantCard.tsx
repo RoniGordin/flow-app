@@ -17,7 +17,7 @@ export const ResturantCard = (props: Props) => {
 
   return (
     <React.Fragment>
-      <Card style={styles.card} onPress={() => history.push('menu')}>
+      <Card style={styles.card} onPress={() => history.push({pathname: 'menu', state: {isBuisnessMode: false}})}>
         <Image
           style={styles.tinyLogo}
           source={placehloder}

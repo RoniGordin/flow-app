@@ -32,7 +32,7 @@ export default function MenuItemScreen(props: Props) {
 		<View>
 			<TopNavigationAccessoriesShowcase
 				title={name}
-			></TopNavigationAccessoriesShowcase>
+			/>
 			<View style={styles.container}>
 				<Image
 					source={require('../assets/images/placeholder.png')}

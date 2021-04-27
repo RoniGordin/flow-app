@@ -5,16 +5,15 @@ import MenuArea from '../components/menu/MenuArea';
 import { Button, Icon, IconProps, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useHistory } from 'react-router-native';
+import { useHistory, useLocation } from 'react-router-native';
 
-interface Props {
-	isBuisnessMode: boolean;
-}
+interface Props {}
+
 
 function ResturantMenu(props: Props) {
-	const { isBuisnessMode } = props;
 	const [value, setValue] = React.useState('');
 	const history = useHistory();
+	const { state: {isBuisnessMode} } = useLocation();
 
 	return (
 		<View style={styles.container}>
@@ -67,11 +66,3 @@ const styles = StyleSheet.create({
 });
 
 export default ResturantMenu;
-
-/* {
-				isBuisnessMode &&
-				<View style={styles.actionsContainer}>
-					<Button accessoryLeft={PlusIcon} onPress={handleAdd}>Add</Button>
-					<Button accessoryLeft={EditIcon} onPress={handleEdit}>Edit</Button>
-				</View>
-			} */
