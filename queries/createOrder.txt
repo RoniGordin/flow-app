@@ -1,0 +1,18 @@
+
+mutation MyMutation($input: OrderInput!) {
+  createOrder(input: {order: $input}) {
+    order {
+      id
+    }
+  }
+}
+
+
+{
+	"input": { "userId": "1abdcc1b-8319-4568-a458-3d68b7fac1d2",
+        "arrivingTime": "2021-03-24 19:30:58.096709",
+        "notes": "",
+        "orderTime": "2021-03-24 19:30:58.096709",
+        "restaurantId": "ffad58c3-bc26-48bc-9428-9ed0443abe92",
+        "status": ""}
+}

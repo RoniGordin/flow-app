@@ -1,0 +1,16 @@
+query MyQuery {
+  order(id: "2587dd81-7e37-431b-a37f-274123a27e9d") {
+    orderTime
+    status
+    arrivingTime
+    orderItemsByOrderId {
+      nodes {
+        comments
+        menuItemByItemId {
+          name
+          price
+        }
+      }
+    }
+  }
+}

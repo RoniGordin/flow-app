@@ -59,7 +59,7 @@ export default function MenuItemScreen(props: Props) {
 
 				<Button
 					style={styles.button}
-					onPress={() => history.push('menu')}
+					onPress={() => history.push({pathname: 'menu', state: {isBuisnessMode: false}})}
 					appearance='filled'
 				>
 					Order Item

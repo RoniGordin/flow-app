@@ -1,0 +1,13 @@
+mutation MyMutation($input: MenuItemInput!) {
+  createMenuItem(
+    input: {menuItem: $input}
+  ) {
+    menuItem {
+      id
+    }
+  }
+}
+
+{
+	"input": {"name": "", "price": 11,"changes": [],"description": "","category": "ENTREES","averagePreparationTime": 11,"imageUrl": "..."}
+}

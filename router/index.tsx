@@ -16,7 +16,7 @@ export default function AppRouter() {
   return (
     <NativeRouter>
       <Route exact path='/' component={ResturantsScreen}/>
-      <Route exact path="/buisnessMain" component={BuisnessDetailsScreen}/>
+      <Route exact path="/dsf" component={BuisnessDetailsScreen}/>
       <Route
         exact
         path='/order'

@@ -1,0 +1,9 @@
+query MyQuery {
+  menuItems {
+    nodes {
+      name
+      imageUrl
+      category
+    }
+  }
+}
