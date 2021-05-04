@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {Text, View} from '../components/Themed';
 import {TopNavigationAccessoriesShowcase} from '../components/TopNavigation';
 import MenuArea from '../components/menu/MenuArea';
 import {Button, Icon, IconProps, Input} from '@ui-kitten/components';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useHistory, useLocation} from 'react-router-native';
 import {useQuery} from "@apollo/client";
 import {getResturantById, GetResturantByIdData} from "../api/queries/client/getResturantById";
 import {Menu, MenuItem, Resturant} from "../types";
 import _ from 'lodash';
+
 
 interface Props {
 }
@@ -25,8 +26,22 @@ function ResturantMenu(props: Props) {
   const [menu, setMenu] = useState<MenuItem[]>();
   const [resturant, setResturant] = useState<Resturant>();
   const history = useHistory();
-  const {state: {isBuisnessMode = false, resturantId}} = useLocation();
+  const {state: {isBuisnessMode = false, resturantId, items, resturantName}} = useLocation();
   const {loading, error, data} = useQuery<GetResturantByIdData, { id: string }>(getResturantById, {variables: {id: resturantId}});
+
+	const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
+
+	useEffect(() => {
+		Animated.timing(
+		  fadeAnim,
+		  {
+			toValue: 1,
+			duration: 250,
+			useNativeDriver:true
+		  },
+		).start();
+	  }, [fadeAnim])
+
 
   useEffect(() => {
     if (data?.restaurant) {
@@ -51,11 +66,13 @@ function ResturantMenu(props: Props) {
         onChangeText={(nextValue) => setValue(nextValue)}
       />
       <ScrollView style={styles.menusContainer}>
+        <Animated.View  style={{opacity: fadeAnim,}}>
         {
           _.map(MENU_CATEGORIES, c =>
             <MenuArea key={c} title={c} enableAdding={isBuisnessMode}
                       menuItems={menu?.filter(item => item.category.toLowerCase() === c.toLowerCase())}/>)
         }
+        </Animated.View>
       </ScrollView>
       {!isBuisnessMode && (
         <Button

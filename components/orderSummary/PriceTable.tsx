@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Rows, Row } from "react-native-table-component";
-import { Text, Divider, Layout } from "@ui-kitten/components";
+import { Text, Divider } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 
 import { OrderItem } from "../../types";
@@ -8,7 +8,6 @@ import { OrderItem } from "../../types";
 interface Props {
   orderList: OrderItem[];
 }
-
 
 
 export default function PriceTable(props: Props) {
@@ -56,6 +55,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   wrapper: { flexDirection: "row" },
-  text: { margin: 6, textAlign: "center", fontSize: 16 },
+  text: { margin: 6, textAlign: "center", fontSize: 16, color:'white' },
   footer: { margin: 6, textAlign: "center", fontSize: 18, fontWeight: "900" },
 });

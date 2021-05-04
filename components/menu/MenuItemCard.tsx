@@ -1,44 +1,54 @@
-import React from 'react';
-import {StyleSheet, Image} from 'react-native';
-import {useHistory} from 'react-router-native';
+import React from "react";
+import { StyleSheet, Image } from "react-native";
+import { useHistory, useLocation } from "react-router-native";
 
-import {Card} from '@ui-kitten/components';
-import {Text, View} from '../Themed';
+import { Card } from "@ui-kitten/components";
+import { Text, View } from "../Themed";
 
-import placehloder from '../../assets/images/placeholder.png';
-import {MenuItem} from "../../types";
+import placehloder from "../../assets/images/placeholder.png";
+import { MenuItem } from "../../types";
 
 interface Props {
   menuItem: MenuItem;
 }
 
 export const MenuItemCard = (props: Props) => {
-  const {menuItem} = props;
+  const { menuItem } = props;
   const history = useHistory();
+  const {
+    state: { isBuisnessMode, resturantName, items },
+  } = useLocation();
 
   const handlePress = () => {
-    history.push({pathname: 'menuItem', state: {menuItem: menuItem}});
+    history.push({
+      pathname: "menuItem",
+      state: {
+        itemName: menuItem.name,
+        resturantName: resturantName,
+        items: items,
+      },
+    });
   };
 
   return (
     <View>
       <Card style={styles.card} onPress={handlePress}>
-        <Image style={styles.tinyLogo} source={placehloder}/>
-        <Text style={{color: 'black'}}>{menuItem.name}</Text>
+        <Image style={styles.tinyLogo} source={placehloder} />
+        <Text style={{ color: "black" }}>{menuItem.name}</Text>
       </Card>
-		</View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   topContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   tinyLogo: {
     height: 140,
     width: 140,
-    position: 'absolute',
+    position: "absolute",
   },
   card: {
     flex: 1,
