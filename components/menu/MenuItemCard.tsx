@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Image} from 'react-native';
-import {useHistory} from 'react-router-native';
+import {useHistory, useLocation} from 'react-router-native';
 
 import {Card} from '@ui-kitten/components';
 import {Text, View} from '../Themed';
@@ -14,9 +14,10 @@ interface Props {
 export const MenuItemCard = (props: Props) => {
   const {name} = props;
   const history = useHistory();
+	const { state: {isBuisnessMode, resturantName, items} } = useLocation();
 
   const handlePress = () => {
-    history.push('menuItem');
+   history.push({pathname: 'menuItem', state: {itemName: name, resturantName:resturantName, items:items}})
   };
 
   return (

@@ -1,11 +1,8 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
-import { ResturantCard } from './ResturantCard';
-
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
+import { ResturantCard } from "./ResturantCard";
 
 const dummyData = ["Girrafe", "Nono", "Nooch", "Joya"];
-const dummyColors = ['primary', "success" , "info", 'warning'];
-
 export const ResturantScrollView = () => {
     return (
         <ScrollView horizontal={true}>

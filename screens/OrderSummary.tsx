@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useHistory } from 'react-router-native';
+import { useHistory, useLocation } from 'react-router-native';
 
 import { Button } from '@ui-kitten/components';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
@@ -19,11 +19,12 @@ interface Props {
 export default function OrderSummaryScreen(props: Props) {
 	const history = useHistory();
 	const { orderList } = props;
+	const { state: {isBuisnessMode, resturantName, items} } = useLocation();
 
 	return (
 		<Fragment>
 			<TopNavigationAccessoriesShowcase title='Order Summary' />
-			<PriceTable orderList={orderList} />
+			<PriceTable orderList={items} />
 			<ComponentWrapper component={<ArrivalWay />} title='Arriving Way' />
 			<ComponentWrapper
 				component={<CollectionTime time={6} />}

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { View } from '../components/Themed';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import MenuArea from '../components/menu/MenuArea';
 import { Button, Icon, IconProps, Input } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useHistory, useLocation } from 'react-router-native';
+import { StyleSheet, Animated} from 'react-native';
 
 interface Props {}
 
@@ -13,11 +13,29 @@ interface Props {}
 function ResturantMenu(props: Props) {
 	const [value, setValue] = React.useState('');
 	const history = useHistory();
-	const { state: {isBuisnessMode} } = useLocation();
+	const { state: {isBuisnessMode, resturantName, items} } = useLocation();
+
+	const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
+
+	useEffect(() => {
+		Animated.timing(
+		  fadeAnim,
+		  {
+			toValue: 1,
+			duration: 250,
+			useNativeDriver:true
+		  },
+		).start();
+	  }, [fadeAnim])
+
+
+	  const submitOrder = () => {
+		history.push({pathname: 'order', state: {resturantName:resturantName, items:items}})		
+	  }
 
 	return (
 		<View style={styles.container}>
-			<TopNavigationAccessoriesShowcase title={'Resturant Menu'} />
+			<TopNavigationAccessoriesShowcase title={`${resturantName}'s Menu`} />
 			<Input
 				placeholder='🔍Search menu'
 				value={value}
@@ -25,18 +43,21 @@ function ResturantMenu(props: Props) {
 				onChangeText={(nextValue) => setValue(nextValue)}
 			/>
 			<ScrollView style={styles.menusContainer}>
+				<Animated.View  style={{opacity: fadeAnim,}}>
 				<MenuArea title='Entrees' enableAdding={isBuisnessMode} />
 				<MenuArea title='Main Courses' enableAdding={isBuisnessMode} />
 				<MenuArea title='Desters' enableAdding={isBuisnessMode} />
+				</Animated.View>
 			</ScrollView>
 			{!isBuisnessMode && (
 				<Button
 					style={styles.button}
-					onPress={() => history.push('order')}
+					onPress={submitOrder}
 				>
 					Finish Order
 				</Button>
 			)}
+			
 		</View>
 	);
 }

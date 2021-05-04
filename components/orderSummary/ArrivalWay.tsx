@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Icon, Layout, Spinner, IconProps } from '@ui-kitten/components';
+import { Button, Icon, Layout } from '@ui-kitten/components';
+import { AntDesign, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'; 
+
 
 interface Props {
 	//onArrivingWaySelection: () => void;
 }
 
-const CarIcon = (props: IconProps) => <Icon {...props} name='car'/>;
-const StarIcon = (props: IconProps) => <Icon {...props} name='star'/>;
-const TVIcon = (props: IconProps) => <Icon {...props} name='tv'/>;
-const TwitterIcon = (props: IconProps) => <Icon {...props} name='twitter'/>;
+const CarIcon = () => <AntDesign name="car" size={26} color="white" />;
+const BikeIcon = () => <MaterialCommunityIcons name="bike" size={26} color="white" />;
+const BusIcon = () => <FontAwesome5 name="bus" size={26} color="white" />
+const WalkIcon = () => <FontAwesome5 name="walking" size={26} color="white" />
 
 
 export default function ArrivalWay(props: Props) {
     return (
         <Layout style={styles.container} level='1'>
             <Button style={styles.button} status='info' accessoryLeft={CarIcon} />
-            <Button style={styles.button} status='info' accessoryLeft={StarIcon} />
-            <Button style={styles.button} status='info' accessoryLeft={TVIcon} />
-            <Button style={styles.button} status='info' accessoryLeft={TwitterIcon} />
+            <Button style={styles.button} status='info' accessoryLeft={BikeIcon} />
+            <Button style={styles.button} status='info' accessoryLeft={BusIcon} />
+            <Button style={styles.button} status='info' accessoryLeft={WalkIcon} />
         </Layout>
     );
 }
