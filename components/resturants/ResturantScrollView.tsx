@@ -1,17 +1,20 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { ResturantCard } from './ResturantCard';
+import {ScrollView} from 'react-native';
+import {ResturantCard} from './ResturantCard';
+import {Resturant} from "../../types";
 
+interface Props {
+  resturants: Resturant[]
+}
 
-const dummyData = ["Girrafe", "Nono", "Nooch", "Joya"];
-const dummyColors = ['primary', "success" , "info", 'warning'];
+export const ResturantScrollView = (props: Props) => {
+  const {resturants = []} = props;
 
-export const ResturantScrollView = () => {
-    return (
-        <ScrollView horizontal={true}>
-            {dummyData.map((i,index) =>
-                <ResturantCard key={index} name={i}/>
-            )}
-        </ScrollView>
-    )
+  return (
+    <ScrollView horizontal={true}>
+      {resturants?.map?.(resturant =>
+        <ResturantCard key={resturant.id} resturant={resturant}/>
+      )}
+    </ScrollView>
+  )
 };

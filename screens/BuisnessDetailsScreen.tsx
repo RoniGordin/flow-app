@@ -36,7 +36,7 @@ export default function BuisnessDetailsScreen(props: Props) {
   );
 
   const viewProducts = () => {
-    history.push({pathname: 'menu', state: {isBuisnessMode: true}});
+    history.push({pathname: 'menu', state: {isBuisnessMode: true, resturantId: "ffad58c3-bc26-48bc-9428-9ed0443abe92"}});
   };
 
   return (

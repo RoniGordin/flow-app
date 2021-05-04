@@ -2,19 +2,20 @@ import React, { Fragment } from 'react';
 import { StyleSheet } from 'react-native';
 import { ResturantScrollView } from './ResturantScrollView';
 import { Text } from '@ui-kitten/components';
-
+import {Resturant} from "../../types";
 
 interface Props {
 	title: string;
+	resturants: Resturant[];
 }
 
 export default function ResturantArea(props: Props) {
-	const { title } = props;
+	const { title, resturants } = props;
 
     return (
         <Fragment>
             <Text style={styles.title}>{title}</Text>
-            <ResturantScrollView/>
+            <ResturantScrollView resturants={resturants}/>
         </Fragment>
     );
 }
