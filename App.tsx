@@ -30,7 +30,7 @@ export default function App() {
 			<ApolloProvider client={client}>
 				<View style={styles.container}>
 					<IconRegistry icons={EvaIconsPack} />
-					<ApplicationProvider {...eva} theme={eva.light}>
+					<ApplicationProvider {...eva} theme={eva.dark}>
 						<SafeAreaProvider>
 							<AppRouter/>
 						</SafeAreaProvider>

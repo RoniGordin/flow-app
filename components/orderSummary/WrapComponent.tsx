@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Text, Divider, Layout } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
+import { View } from '../Themed';
+import { Text, Divider } from '@ui-kitten/components';
 
 interface Props {
     title: string;
@@ -13,9 +14,9 @@ export default function ComponentWrapper (props: Props) {
         <View style={styles.view}>
             <Text style={styles.headline}>{title}</Text>
             <Divider />
-            <Layout style={styles.container} level='1'>
+            <View style={styles.container}>
                 {component}
-            </Layout>
+            </View>
         </View>
     );
 };

@@ -1,20 +1,23 @@
-import React, {Fragment, useState, useEffect, useRef} from 'react';
-import {StyleSheet, Image, GestureResponderEvent, Animated} from 'react-native';
-import {TopNavigationAccessoriesShowcase} from '../components/TopNavigation';
-import {Button, Text, Divider} from '@ui-kitten/components';
-import {useHistory, useLocation} from 'react-router-native';
-import {View} from '../components/Themed';
-import {MenuItem} from "../types";
+import React, { Fragment, useState, useEffect, useRef } from "react";
+import {
+  StyleSheet,
+  Image,
+  GestureResponderEvent,
+  Animated,
+} from "react-native";
+import { TopNavigationAccessoriesShowcase } from "../components/TopNavigation";
+import { Button, Divider } from "@ui-kitten/components";
+import { useHistory, useLocation } from "react-router-native";
+import { View, Text } from "../components/Themed";
+import { MenuItem } from "../types";
 import _ from "lodash";
 import { FlexStyleProps } from "@ui-kitten/components/devsupport";
 
-
 interface LocationState {
   state: {
-    menuItem: MenuItem
-  }
+    menuItem: MenuItem;
+  };
 }
-
 
 interface Props {}
 
@@ -22,10 +25,12 @@ type Changes = Record<string, boolean>;
 
 export default function MenuItemScreen(props: Props) {
   const possibleChanges = ["Tomato", "Onions", "Banana"];
-  const { state: {isBuisnessMode, resturantName, items, itemName} } = useLocation();
+  const {
+    state: { isBuisnessMode, resturantName, items, item },
+  } = useLocation();
 
   const [changes, setChanges] = useState<Changes>(
-    possibleChanges.reduce((acc, change) => {
+    item.changes?.reduce((acc, change) => {
       acc[change] = false;
       return acc;
     }, {} as Record<string, boolean>)
@@ -47,39 +52,55 @@ export default function MenuItemScreen(props: Props) {
   };
 
   const onItemOrder = () => {
-    items.push({ name: itemName, price: 15, changes: changes });
+    items.push({ name: item.name, price: 15, changes: changes });
     history.goBack();
   };
 
   return (
     <View>
-      <TopNavigationAccessoriesShowcase title={itemName} />
+      <TopNavigationAccessoriesShowcase title={item.name} />
       <Animated.View style={{ opacity: fadeAnim }}>
         <View style={styles.container}>
           <Image
-            source={require("../assets/images/placeholder.png")}
+            //source={{uri:item.imageSrc}}
+            source={{
+              uri: "https://prod-wolt-venue-images-cdn.wolt.com/s/b1hUH7Nk3LhRNuXEF0qb4F8G0GLn-E4fCTU-wkpY-9U/5ef98a7d81212f58438ca95e/75e8fc72-6b89-11eb-95c9-4a52c3a0b030_karela_00305.jpg",
+            }}
             style={styles.itemImage}
           />
 
           <View style={styles.titleContainer}>
-            <Text style={styles.title} category="h5">
-              Possible Changes
+            <Text style={styles.description} category="h6">
+              {item.description}
             </Text>
-            <Divider style={styles.divider} />
           </View>
 
-          <View style={styles.possibleChangesContainer}>
-            {Object.entries(changes).map(([change, isChecked]) => (
-              <SingleChange
-                key={change}
-                name={change}
-                isChecked={isChecked}
-                onPress={handlePossibleChangeClick}
-              />
-            ))}
-          </View>
+          {changes && Object.entries(changes).length != 0 ? (
+            <React.Fragment>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title} category="h5">
+                  Possible Changes
+                </Text>
+                <Divider style={styles.divider} />
+              </View>
+              <View style={styles.possibleChangesContainer}>
+                {Object.entries(changes).map(([change, isChecked]) => (
+                  <SingleChange
+                    key={change}
+                    name={change}
+                    isChecked={isChecked}
+                    onPress={handlePossibleChangeClick}
+                  />
+                ))}
+              </View>
+            </React.Fragment>
+          ) : null}
 
-          <Button style={styles.button} onPress={onItemOrder} appearance="filled">
+          <Button
+            style={styles.button}
+            onPress={onItemOrder}
+            appearance="filled"
+          >
             Order Item
           </Button>
         </View>
@@ -129,18 +150,19 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     marginBottom: 30,
-    width: 200,
-    height: 200,
+    width: 350,
+    height: 250,
   },
   button: {
     marginVertical: 2,
     width: 200,
     marginTop: 30,
-    backgroundColor: "#FF5D55",
-    borderColor: "#FF5D55",
+    backgroundColor: "#2ECC71",
+    borderColor: "#2ECC71",
   },
   title: {
-    marginTop: 5,
+    marginTop: 15,
+    fontSize:24
   },
   divider: {
     flex: 1,
@@ -153,5 +175,10 @@ const styles = StyleSheet.create({
   },
   possibleChange: {
     margin: "1%",
+  },
+  description: {
+    color: "#C0C0C0",
+    fontSize:18,
+    paddingBottom:15,
   },
 });

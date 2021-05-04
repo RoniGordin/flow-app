@@ -29,19 +29,22 @@ function ResturantMenu(props: Props) {
   const {state: {isBuisnessMode = false, resturantId, items, resturantName}} = useLocation();
   const {loading, error, data} = useQuery<GetResturantByIdData, { id: string }>(getResturantById, {variables: {id: resturantId}});
 
-	const fadeAnim = useRef(new Animated.Value(0)).current  // Initial value for opacity: 0
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
-	useEffect(() => {
-		Animated.timing(
-		  fadeAnim,
-		  {
-			toValue: 1,
-			duration: 250,
-			useNativeDriver:true
-		  },
-		).start();
-	  }, [fadeAnim])
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
+  const submitOrder = () => {
+    history.push({
+      pathname: "order",
+      state: { resturantName: resturantName, items: items },
+    });
+  };
 
   useEffect(() => {
     if (data?.restaurant) {
@@ -77,7 +80,7 @@ function ResturantMenu(props: Props) {
       {!isBuisnessMode && (
         <Button
           style={styles.button}
-          onPress={() => history.push('order')}
+          onPress={submitOrder}
         >
           Finish Order
         </Button>
@@ -88,15 +91,15 @@ function ResturantMenu(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    display: 'flex',
+    height: "100%",
+    display: "flex",
   },
   actionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: '5%',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    padding: "5%",
   },
   menusContainer: {
     flex: 1,
