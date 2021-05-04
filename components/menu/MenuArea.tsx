@@ -5,6 +5,7 @@ import {Text} from '@ui-kitten/components';
 import {View} from '../Themed';
 import {Button, Icon, IconProps} from '@ui-kitten/components';
 import {FlexStyleProps} from '@ui-kitten/components/devsupport';
+import {MenuItem} from "../../types";
 
 const ActionIcon = (name: string) => (props: IconProps) => (
   <Icon name={name} {...props} />
@@ -15,10 +16,11 @@ const PlusIcon = ActionIcon('plus');
 interface Props {
   title: string;
   enableAdding: boolean;
+  menuItems?: MenuItem[];
 }
 
 export default function MenuArea(props: Props) {
-  const {title, enableAdding} = props;
+  const {title, enableAdding, menuItems = []} = props;
 
   const handleAdd = () => {
   };
@@ -34,7 +36,7 @@ export default function MenuArea(props: Props) {
 					</Button>
         }
       </View>
-      <MenuScrollView/>
+      <MenuScrollView menuItems={menuItems}/>
     </View>
   );
 }

@@ -13,10 +13,11 @@ import BuisnessDetailsScreen from "../screens/BuisnessDetailsScreen";
 import DummyOrderData from "../constants/DummyOrderData";
 
 export default function AppRouter() {
+
   return (
     <NativeRouter>
-      <Route exact path='/' component={ResturantsScreen}/>
-      <Route exact path="/dsf" component={BuisnessDetailsScreen}/>
+      <Route exact path='/kn' component={ResturantsScreen}/>
+      <Route exact path="/" component={BuisnessDetailsScreen}/>
       <Route
         exact
         path='/order'
@@ -40,7 +41,7 @@ export default function AppRouter() {
           />
         )}
       />
-      <Route exact path='/menuItem' component={() => <MenuItemScreen name='dsfsdf'/>}/>
+      <Route exact path='/menuItem' component={MenuItemScreen}/>
       <Route exact path='/menu' component={ResturantMenuScreen}/>
     </NativeRouter>
   );

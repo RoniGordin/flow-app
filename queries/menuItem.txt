@@ -1,5 +1,0 @@
-query MyQuery {
-  menuItem(id: "a88995fc-82e9-417c-a1cf-80eecc40625e"){
-    changes
-  }
-}

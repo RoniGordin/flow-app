@@ -6,24 +6,25 @@ import {Card} from '@ui-kitten/components';
 import {Text, View} from '../Themed';
 
 import placehloder from '../../assets/images/placeholder.png';
+import {MenuItem} from "../../types";
 
 interface Props {
-  name: string;
+  menuItem: MenuItem;
 }
 
 export const MenuItemCard = (props: Props) => {
-  const {name} = props;
+  const {menuItem} = props;
   const history = useHistory();
 
   const handlePress = () => {
-    history.push('menuItem');
+    history.push({pathname: 'menuItem', state: {menuItem: menuItem}});
   };
 
   return (
     <View>
       <Card style={styles.card} onPress={handlePress}>
         <Image style={styles.tinyLogo} source={placehloder}/>
-        <Text style={{color: 'black'}}>{name}</Text>
+        <Text style={{color: 'black'}}>{menuItem.name}</Text>
       </Card>
 		</View>
   );
