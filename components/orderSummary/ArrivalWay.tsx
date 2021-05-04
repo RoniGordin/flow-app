@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Icon, Layout } from '@ui-kitten/components';
+import { Button } from '@ui-kitten/components';
+import { View } from '../Themed';
 import { AntDesign, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'; 
 
 
@@ -16,12 +17,12 @@ const WalkIcon = () => <FontAwesome5 name="walking" size={26} color="white" />
 
 export default function ArrivalWay(props: Props) {
     return (
-        <Layout style={styles.container} level='1'>
+        <View style={styles.container}>
             <Button style={styles.button} status='info' accessoryLeft={CarIcon} />
             <Button style={styles.button} status='info' accessoryLeft={BikeIcon} />
             <Button style={styles.button} status='info' accessoryLeft={BusIcon} />
             <Button style={styles.button} status='info' accessoryLeft={WalkIcon} />
-        </Layout>
+        </View>
     );
 }
 

@@ -18,6 +18,9 @@ export type TabTwoParamList = {
 
 export type OrderItem = {
   name: string;
+  description?: string;
+  possibleChanges: string[];
+  imageSrc:string;
   price: number;
 };
 

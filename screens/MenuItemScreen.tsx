@@ -11,23 +11,19 @@ import { Button, Text, Divider } from "@ui-kitten/components";
 import { useHistory, useLocation } from "react-router-native";
 import { View } from "../components/Themed";
 import _ from "lodash";
-import { FlexStyleProps } from "@ui-kitten/components/devsupport";
-import { AddToCartFunc } from "../types";
 
 interface Props {
-  name: string;
-  addToCart: AddToCartFunc;
 }
 
 type Changes = Record<string, boolean>;
 
 export default function MenuItemScreen(props: Props) {
-  const { name = "Product Name" } = props;
-  const possibleChanges = ["Tomato", "Onions", "Banana"];
-  const { state: {isBuisnessMode, resturantName, items, itemName} } = useLocation();
+  const {
+    state: { isBuisnessMode, resturantName, items, item },
+  } = useLocation();
 
   const [changes, setChanges] = useState<Changes>(
-    possibleChanges.reduce((acc, change) => {
+    item.possibleChanges.reduce((acc, change) => {
       acc[change] = false;
       return acc;
     }, {} as Record<string, boolean>)
@@ -49,19 +45,33 @@ export default function MenuItemScreen(props: Props) {
   };
 
   const onItemOrder = () => {
-    items.push({'name':itemName, 'price':50, 'changes': changes})
-    history.push({ pathname: "menu", state: { isBuisnessMode: false, resturantName:resturantName, items:items } });
+    items.push({ name: item.name, price: item.price, changes: changes });
+    history.push({
+      pathname: "menu",
+      state: {
+        isBuisnessMode: false,
+        resturantName: resturantName,
+        items: items,
+      },
+    });
   };
 
   return (
     <View>
-      <TopNavigationAccessoriesShowcase title={itemName} />
+      <TopNavigationAccessoriesShowcase title={item.name} />
       <Animated.View style={{ opacity: fadeAnim }}>
         <View style={styles.container}>
           <Image
-            source={require("../assets/images/placeholder.png")}
+            source={{uri:item.imageSrc}}
             style={styles.itemImage}
           />
+
+          <View style={styles.titleContainer}>
+            <Text style={styles.description} category="h6">
+              {item.description}
+            </Text>
+            <Divider style={styles.divider} />
+          </View>
 
           <View style={styles.titleContainer}>
             <Text style={styles.title} category="h5">
@@ -81,7 +91,11 @@ export default function MenuItemScreen(props: Props) {
             ))}
           </View>
 
-          <Button style={styles.button} onPress={onItemOrder} appearance="filled">
+          <Button
+            style={styles.button}
+            onPress={onItemOrder}
+            appearance="filled"
+          >
             Order Item
           </Button>
         </View>
@@ -131,15 +145,15 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     marginBottom: 30,
-    width: 200,
-    height: 200,
+    width: 350,
+    height: 250,
   },
   button: {
     marginVertical: 2,
     width: 200,
     marginTop: 30,
-    backgroundColor: "#FF5D55",
-    borderColor: "#FF5D55",
+    backgroundColor: "#2ECC71",
+    borderColor: "#2ECC71",
   },
   title: {
     marginTop: 5,
@@ -156,4 +170,7 @@ const styles = StyleSheet.create({
   possibleChange: {
     margin: "1%",
   },
+  description: {
+    color:'#C0C0C0'
+  }
 });

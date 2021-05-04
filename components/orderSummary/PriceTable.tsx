@@ -21,7 +21,7 @@ export default function PriceTable(props: Props) {
     let priceSum:number = 0;
 
     orderList.map((item) => {
-      let innerData:[string, number] = [item.name, item.price];
+      let innerData:[string, number] = [`${item.name}`, item.price];
       data.push(innerData);
       priceSum += item.price;
     });
@@ -44,7 +44,9 @@ export default function PriceTable(props: Props) {
 
 const styles = StyleSheet.create({
   table:{
-    paddingTop:5
+    paddingTop:5,
+    minHeight:270,
+    maxHeight:280
   },
   headline: {
     textAlign: "left",

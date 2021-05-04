@@ -1,11 +1,10 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {MenuScrollView} from './MenuScrollView';
 import {Text} from '@ui-kitten/components';
 import {View} from '../Themed';
 import {Button, Icon, IconProps} from '@ui-kitten/components';
-import {FlexStyleProps} from '@ui-kitten/components/devsupport';
-
+import {OrderItem} from '../../types';
 const ActionIcon = (name: string) => (props: IconProps) => (
   <Icon name={name} {...props} />
 );
@@ -15,10 +14,12 @@ const PlusIcon = ActionIcon('plus');
 interface Props {
   title: string;
   enableAdding: boolean;
+  data: OrderItem[];
+  
 }
 
 export default function MenuArea(props: Props) {
-  const {title, enableAdding} = props;
+  const {title, enableAdding, data} = props;
 
   const handleAdd = () => {
   };
@@ -34,7 +35,7 @@ export default function MenuArea(props: Props) {
 					</Button>
         }
       </View>
-      <MenuScrollView/>
+      <MenuScrollView data={data}/>
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useHistory, useLocation } from 'react-router-native';
-
+import { View } from '../components/Themed';
 import { Button } from '@ui-kitten/components';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 
@@ -21,6 +21,7 @@ export default function OrderSummaryScreen(props: Props) {
 	const { orderList } = props;
 	const { state: {isBuisnessMode, resturantName, items} } = useLocation();
 
+	console.log(items)
 	return (
 		<Fragment>
 			<TopNavigationAccessoriesShowcase title='Order Summary' />

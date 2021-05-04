@@ -40,7 +40,7 @@ export default function AppRouter() {
           />
         )}
       />
-      <Route exact path='/menuItem' component={() => <MenuItemScreen name='dsfsdf'/>}/>
+      <Route exact path='/menuItem' component={() => <MenuItemScreen/>}/>
       <Route exact path='/menu' component={ResturantMenuScreen}/>
     </NativeRouter>
   );
