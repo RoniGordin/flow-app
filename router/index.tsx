@@ -11,13 +11,15 @@ import ResturantMenuScreen from '../screens/ResturantMenu';
 import BuisnessDetailsScreen from "../screens/BuisnessDetailsScreen";
 
 import DummyOrderData from "../constants/DummyOrderData";
+import ClientMainScreen from "../screens/ClientMainScreen";
 
 export default function AppRouter() {
 
   return (
     <NativeRouter>
-      <Route exact path='/kn' component={ResturantsScreen}/>
-      <Route exact path="/" component={BuisnessDetailsScreen}/>
+      <Route exact path='/' component={ClientMainScreen}/>
+      <Route exact path='/restaurants' component={ResturantsScreen}/>
+      <Route exact path="/kjl" component={BuisnessDetailsScreen}/>
       <Route
         exact
         path='/order'

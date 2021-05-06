@@ -17,7 +17,6 @@ type Changes = Record<string, boolean>;
 export default function MenuItemScreen() {
   const {state: {menuItem}} = useLocation<LocationState>();
   const history = useHistory();
-  console.log(menuItem);
 
   const [changes, setChanges] = useState<Changes>(
     menuItem?.changes?.reduce((acc: Record<string, boolean>, change: string) => {
