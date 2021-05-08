@@ -35,7 +35,7 @@ export default function OrderStatusScreen(props: Props) {
 
     navigator.geolocation.getCurrentPosition(
       position => {
-        setCurrentOrder({ ...currentOrder, location: JSON.stringify(position) });
+        setCurrentOrder({ ...currentOrder, location: position });
 
       },
       error => console.log(error),
