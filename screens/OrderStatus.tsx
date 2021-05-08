@@ -6,6 +6,8 @@ import { Text } from "@ui-kitten/components";
 import OrderProgress from "../components/OrderProgress";
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import { AppContext } from "../context/AppContext";
+import { useMutation } from "@apollo/client";
+import { updateLocation } from "../api/queries/updateLocation";
 
 
 interface Props {
@@ -31,10 +33,19 @@ export default function OrderStatusScreen(props: Props) {
 
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
 
-  const updateLocation = () => {
+  const [uLocation] = useMutation(updateLocation);
+
+  const handleLocationUpdate = async () => {
 
     navigator.geolocation.getCurrentPosition(
-      position => {
+      async position => {
+        try {
+          //TODO: integrate with real order id
+          await uLocation({ variables: { id: '2587dd81-7e37-431b-a37f-274123a27e9d', lon: position.coords.longitude, lat: position.coords.latitude } });
+          console.log('success')
+        } catch (err) {
+          throw new Error('Unable to fetch location')
+        }
         setCurrentOrder({ ...currentOrder, location: position });
 
       },
@@ -45,8 +56,8 @@ export default function OrderStatusScreen(props: Props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // TODO: acctually update order by id. also check if the order status is finsihed then clear state and interval.
-      updateLocation();
+      // TODO: check if the order status is finsihed then clear state and interval.
+      handleLocationUpdate();
     }, 60000);
     return () => clearInterval(interval);
   }, []);
@@ -61,7 +72,7 @@ export default function OrderStatusScreen(props: Props) {
       <TopNavigationAccessoriesShowcase title='' />
       <Layout style={styles.container}>
         <Text style={styles.title} category="h1">
-          Order Status
+          Order Status # {orderId}
         </Text>
         <OrderProgress timeLeft={timeLeft} orderTime={orderTime} />
         <View style={styles.actionsContainer}>

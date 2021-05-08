@@ -17,7 +17,7 @@ import { AppRegistry } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-	uri: 'http://192.168.1.40:80/graphql',
+	uri: 'http://flow.cs.colman.ac.il/graphql',
 	cache: new InMemoryCache()
 });
 

@@ -12,6 +12,8 @@ import CollectionTime from '../components/orderSummary/CollectionTime';
 import ArrivalWay from '../components/orderSummary/ArrivalWay';
 import PriceTable from '../components/orderSummary/PriceTable';
 import { AppContext } from '../context/AppContext';
+import { createOrder } from '../api/queries/createOrder';
+import { useMutation } from '@apollo/client';
 
 interface Props {
 	orderList: OrderItem[];
@@ -21,10 +23,12 @@ export default function OrderSummaryScreen(props: Props) {
 	const history = useHistory();
 	const { orderList } = props;
 	const { currentOrder, setCurrentOrder } = useContext(AppContext);
+	const [cOrder] = useMutation(createOrder);
 
 	const submitOrder = () => {
 		// TODO: acctually insert new order and get it's id. then save it to state
-		setCurrentOrder({ id: '1234'});
+		// TODO: calculate arrivalTime based on distance from rest and arrivalWay
+		setCurrentOrder({ id: '1234' });
 		history.push('status')
 	}
 
