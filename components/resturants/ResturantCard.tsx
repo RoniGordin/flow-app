@@ -1,28 +1,29 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { useHistory } from "react-router-native";
+import {StyleSheet, Image} from 'react-native';
+import {useHistory} from "react-router-native";
 
-import { Card } from '@ui-kitten/components';
-import { Text } from '../Themed';
+import {Card} from '@ui-kitten/components';
+import {Text} from '../Themed';
 
 import placehloder from '../../assets/images/placeholder.png';
+import {Resturant} from "../../types";
 
 interface Props {
-	name : string;
+  resturant: Resturant;
 }
-export const ResturantCard = (props: Props) => {
-    const { name } = props;
-    const history = useHistory();
 
+export const ResturantCard = (props: Props) => {
+  const {resturant} = props;
+  const history = useHistory();
 
   return (
     <React.Fragment>
-      <Card style={styles.card} onPress={() => history.push('menu')}>
+      <Card style={styles.card} onPress={() => history.push({pathname: 'menu', state: {isBuisnessMode: false, resturantId: resturant.id}})}>
         <Image
           style={styles.tinyLogo}
           source={placehloder}
         />
-        <Text style={{color:'black'}}>{name}</Text>
+        <Text style={{color: 'black'}}>{resturant.name}</Text>
       </Card>
     </React.Fragment>
   )
@@ -34,14 +35,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   tinyLogo: {
-    height:140,
-    width:140,
-    position:'absolute'
+    height: 140,
+    width: 140,
+    position: 'absolute'
   },
   card: {
     flex: 1,
     margin: 2,
-    height:140,
-    width:140
+    height: 140,
+    width: 140
   }
 });

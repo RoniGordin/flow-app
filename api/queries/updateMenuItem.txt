@@ -1,0 +1,12 @@
+mutation MyMutation($id: UUID!, $patch: MenuItemPatch!) {
+  updateMenuItem(input: { id: $id, patch: $patch }) {
+    menuItem {
+      id
+    }
+  }
+}
+
+{
+  "id": "46296c28-7e86-46e9-84e3-19445da8161c",
+	"patch": {"name": "", "price": 11,"changes": [],"description": "","category": "ENTREES","averagePreparationTime": 11,"imageUrl": "..."}
+}

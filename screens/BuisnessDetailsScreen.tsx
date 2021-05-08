@@ -13,12 +13,16 @@ import {
   Button,
   TopNavigationAction,
 } from "@ui-kitten/components";
+import {useHistory} from 'react-router-native';
+
 interface Props {
   name: string;
 }
 
 export default function BuisnessDetailsScreen(props: Props) {
   const EditIcon = (props: IconProps) => <Icon {...props} name="edit" />;
+  const history = useHistory();
+
   const data = new Array(8).fill({
     title: "Item",
     description: "Description for Item",
@@ -30,6 +34,10 @@ export default function BuisnessDetailsScreen(props: Props) {
       description={`${item.description} ${index + 1}`}
     />
   );
+
+  const viewProducts = () => {
+    history.push({pathname: 'menu', state: {isBuisnessMode: true, resturantId: "ffad58c3-bc26-48bc-9428-9ed0443abe92"}});
+  };
 
   return (
     <Fragment>
@@ -60,7 +68,7 @@ export default function BuisnessDetailsScreen(props: Props) {
           ItemSeparatorComponent={Divider}
           renderItem={renderItem}
         />
-        <Button style={styles.button}>View Products</Button>
+        <Button style={styles.button} onPress={viewProducts}>View Products</Button>
       </Layout>
     </Fragment>
   );
