@@ -22,7 +22,7 @@ const client = new ApolloClient({
 export default function App() {
 
 	const isLoadingComplete = useCachedResources();
-
+	
 	if (!isLoadingComplete) {
 		return null;
 	} else {
