@@ -1,52 +1,92 @@
 import React, { useEffect, useState } from "react";
-import { Table, Rows, Row } from "react-native-table-component";
-import { Text, Divider } from "@ui-kitten/components";
-import { StyleSheet, View } from "react-native";
+import { Divider, List, ListItem } from "@ui-kitten/components";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet } from "react-native";
+import { View, Text } from "../Themed";
 
-import { OrderItem } from "../../types";
+import { OrderSummaryItem } from "../../types";
 
 interface Props {
-  orderList: OrderItem[];
+  orderList: OrderSummaryItem[];
+  removeItem: Function;
 }
 
-
 export default function PriceTable(props: Props) {
-  const [tableData, setTableData] = useState([]);
+  const [orderTable, setOrderTable] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  const { orderList } = props;
+  const { orderList, removeItem } = props;
+  const [localOrderList, setLocalOrderList] = useState(orderList);
 
   useEffect(() => {
-    let data:[string, number] = [];
-    let priceSum:number = 0;
+    renderTable(localOrderList);
+  }, [localOrderList]);
 
-    orderList.map((item) => {
-      let innerData:[string, number] = [`${item.name}`, item.price];
+  const removeItemFromList = (index: number) => {
+    localOrderList.splice(index, 1);
+    renderTable(localOrderList);
+    setLocalOrderList(localOrderList);
+    removeItem(index);
+  };
+
+  const renderTable = (currentOrderList) => {
+    let data = [];
+    let priceSum: number = 0;
+    currentOrderList.map((item) => {
+      let innerData = {
+        title: `${item.name} - ${item.price}₪`,
+        description: Object.entries(item.changes)
+          .filter((item) => {
+            if (item[1]) return item[0];
+          })
+          .map((value) => value[0]),
+      };
       data.push(innerData);
       priceSum += item.price;
     });
 
     setTotalPrice(priceSum);
-    setTableData(data);
-  }, [orderList]);
+    setOrderTable(data);
+  };
+
+  const renderItemAccessory = (index: number) => (
+    <MaterialIcons
+      name="cancel"
+      size={28}
+      color="white"
+      onPress={() => removeItemFromList(index)}
+    />
+  );
+
+  const renderItem = ({ item, index }) => (
+    <ListItem
+      title={<Text style={styles.row}>{item.title}</Text>}
+      description={`${item.description}`}
+      accessoryRight={() => renderItemAccessory(index)}
+    />
+  );
 
   return (
     <View>
       <Text style={styles.headline}>Prices</Text>
       <Divider />
-      <Table style={styles.table}>
-        <Rows data={tableData} textStyle={styles.text} />
-        <Row data={[`Total: ${totalPrice}`]} textStyle={styles.footer} />
-      </Table>
+      <List
+        style={styles.table}
+        data={orderTable}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderItem}
+      />
+
+      <View>
+        <Text style={styles.footer}>Total price of: {totalPrice}₪</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  table:{
-    paddingTop:5,
-    minHeight:270,
-    maxHeight:280
+  table: {
+    paddingTop: 5,
+    height: 270,
   },
   headline: {
     textAlign: "left",
@@ -57,6 +97,15 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   wrapper: { flexDirection: "row" },
-  text: { margin: 6, textAlign: "center", fontSize: 16, color:'white' },
-  footer: { margin: 6, textAlign: "center", fontSize: 18, fontWeight: "900" },
+  text: { margin: 6, textAlign: "center", fontSize: 16, color: "white" },
+  footer: {
+    textAlign: "center",
+    fontSize: 22,
+    justifyContent: "center",
+    fontWeight: "900",
+    color: "white",
+  },
+  row: {
+    fontSize: 16,
+  },
 });
