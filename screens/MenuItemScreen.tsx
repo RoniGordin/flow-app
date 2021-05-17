@@ -12,8 +12,7 @@ import { useHistory, useLocation } from "react-router-native";
 import { View } from "../components/Themed";
 import _ from "lodash";
 
-interface Props {
-}
+interface Props {}
 
 type Changes = Record<string, boolean>;
 
@@ -61,10 +60,7 @@ export default function MenuItemScreen(props: Props) {
       <TopNavigationAccessoriesShowcase title={item.name} />
       <Animated.View style={{ opacity: fadeAnim }}>
         <View style={styles.container}>
-          <Image
-            source={{uri:item.imageSrc}}
-            style={styles.itemImage}
-          />
+          <Image source={{ uri: item.imageSrc }} style={styles.itemImage} />
 
           <View style={styles.titleContainer}>
             <Text style={styles.description} category="h6">
@@ -73,23 +69,27 @@ export default function MenuItemScreen(props: Props) {
             <Divider style={styles.divider} />
           </View>
 
-          <View style={styles.titleContainer}>
-            <Text style={styles.title} category="h5">
-              Possible Changes
-            </Text>
-            <Divider style={styles.divider} />
-          </View>
+          {Object.entries(changes).length != 0 ? (
+            <React.Fragment>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title} category="h5">
+                  Possible Changes
+                </Text>
+                <Divider style={styles.divider} />
+              </View>
 
-          <View style={styles.possibleChangesContainer}>
-            {Object.entries(changes).map(([change, isChecked]) => (
-              <SingleChange
-                key={change}
-                name={change}
-                isChecked={isChecked}
-                onPress={handlePossibleChangeClick}
-              />
-            ))}
-          </View>
+              <View style={styles.possibleChangesContainer}>
+                {Object.entries(changes).map(([change, isChecked]) => (
+                  <SingleChange
+                    key={change}
+                    name={change}
+                    isChecked={isChecked}
+                    onPress={handlePossibleChangeClick}
+                  />
+                ))}
+              </View>
+            </React.Fragment>
+          ) : null}
 
           <Button
             style={styles.button}
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
     margin: "1%",
   },
   description: {
-    color:'#C0C0C0'
-  }
+    color: "#C0C0C0",
+  },
 });
