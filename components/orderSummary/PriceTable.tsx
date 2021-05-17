@@ -25,7 +25,7 @@ export default function PriceTable(props: Props) {
     localOrderList.splice(index, 1);
     renderTable(localOrderList);
     setLocalOrderList(localOrderList);
-    removeItem(index);
+    removeItem();
   };
 
   const renderTable = (currentOrderList) => {

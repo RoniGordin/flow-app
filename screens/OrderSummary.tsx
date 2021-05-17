@@ -1,10 +1,9 @@
-import React, { Fragment, useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { Fragment, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { useHistory, useLocation } from "react-router-native";
-import { View } from "../components/Themed";
-import { Button } from "@ui-kitten/components";
+import { Button, Modal, Card, Text } from "@ui-kitten/components";
 import { TopNavigationAccessoriesShowcase } from "../components/TopNavigation";
-
+import { AntDesign } from "@expo/vector-icons";
 import { OrderItem } from "../types";
 
 import ComponentWrapper from "../components/orderSummary/WrapComponent";
@@ -21,18 +20,29 @@ export default function OrderSummaryScreen(props: Props) {
   const {
     state: { isBuisnessMode, resturantName, items },
   } = useLocation();
-  const [orderItems, setOrderItems] = useState(items);
+  const [visible, setVisible] = useState(false);
 
+  useEffect(() => {
+    if (items.length == 0) popupAlert();
+  }, []);
 
-  const removeItem = (index) => {
-	  orderItems.splice(index,1)
-
-	  setOrderItems(orderItems);
+  const removeItem = () => {
+    if (items.length == 0) popupAlert();
   };
+
+  const popupAlert = () => {
+    setVisible(true);
+
+    setTimeout(() => {
+      setVisible(false);
+      history.goBack();
+    }, 3000);
+  };
+
   return (
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Order Summary" />
-      <PriceTable orderList={orderItems} removeItem={removeItem} />
+      <PriceTable orderList={items} removeItem={removeItem} />
       <ComponentWrapper component={<ArrivalWay />} title="Arriving Way" />
       <ComponentWrapper
         component={<CollectionTime time={6} />}
@@ -43,6 +53,16 @@ export default function OrderSummaryScreen(props: Props) {
           Submit Order
         </Button>
       </View>
+
+      <Modal visible={visible} style={styles.modal} backdropStyle={styles.backdrop}>
+        <Card disabled={true}>
+          <View style={styles.modalTitleArea}>
+            <AntDesign name="shoppingcart" style={styles.modalIcon} size={28} color="white" />
+            <Text style={styles.modalTitle}>Your order list is empty</Text>
+          </View>
+          <Text>Youll be redirected to menu page in 3 seconds</Text>
+        </Card>
+      </Modal>
     </Fragment>
   );
 }
@@ -59,5 +79,23 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     padding: 30,
+  },
+  modal:{
+    width:380,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalTitleArea: {
+    flex:1,
+    flexDirection:'row',
+    paddingBottom:14
+  },
+  modalTitle: {
+    fontSize:25
+  },
+  modalIcon: {
+    paddingRight:10,
+    textAlignVertical:'bottom',
   },
 });
