@@ -44,7 +44,6 @@ export default function PriceTable(props: Props) {
     let data = [];
     let priceSum: number = 0;
     currentOrderList.map((item) => {
-      console.log(item.changes)
       let innerData = {
         title: `${item.name} - ${item.price}₪`,
         description: fillChanges(item.changes)
