@@ -15,14 +15,14 @@ import { AppRegistry } from 'react-native';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 
 const client = new ApolloClient({
-	uri: 'http://192.168.1.40:80/graphql',
+	uri: 'http://193.106.55.108:80/graphql',
 	cache: new InMemoryCache()
 });
 
 export default function App() {
 
 	const isLoadingComplete = useCachedResources();
-
+	
 	if (!isLoadingComplete) {
 		return null;
 	} else {
@@ -30,7 +30,7 @@ export default function App() {
 			<ApolloProvider client={client}>
 				<View style={styles.container}>
 					<IconRegistry icons={EvaIconsPack} />
-					<ApplicationProvider {...eva} theme={eva.light}>
+					<ApplicationProvider {...eva} theme={eva.dark}>
 						<SafeAreaProvider>
 							<AppRouter/>
 						</SafeAreaProvider>

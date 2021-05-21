@@ -1,20 +1,21 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
-import { MenuItemCard } from './MenuItemCard';
-import {MenuItem} from "../../types";
+import React from "react";
+import { ScrollView } from "react-native";
+import { MenuItemCard } from "./MenuItemCard";
+import { MenuItem } from "../../types";
+import { Text, View } from "../Themed";
 
 interface Props {
-    menuItems: MenuItem[];
+  menuItems: MenuItem[];
 }
 
 export const MenuScrollView = (props: Props) => {
-    const {menuItems} = props;
+  const { menuItems } = props;
 
-    return (
-        <ScrollView horizontal={true}>
-            {menuItems?.map(item =>
-                <MenuItemCard key={item.id} menuItem={item}/>
-            )}
-        </ScrollView>
-    )
+  return (
+    <View>
+      {menuItems?.map((item) => (
+        <MenuItemCard key={item.id} menuItem={item} />
+      ))}
+    </View>
+  );
 };

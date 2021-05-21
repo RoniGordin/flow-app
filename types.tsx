@@ -1,3 +1,5 @@
+import { List } from "lodash";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -18,8 +20,17 @@ export type TabTwoParamList = {
 
 export type OrderItem = {
   name: string;
+  description?: string;
+  possibleChanges: string[];
+  imageSrc:string;
   price: number;
 };
+
+export type OrderSummaryItem = {
+    changes: Object[],
+    name: string,
+    price: number,
+}
 
 export type Resturant = {
   id: string;
