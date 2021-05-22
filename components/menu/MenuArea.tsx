@@ -1,8 +1,7 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {MenuScrollView} from './MenuScrollView';
-import {Text} from '@ui-kitten/components';
-import {View} from '../Themed';
+import {View, Text} from '../Themed';
 import {Button, Icon, IconProps} from '@ui-kitten/components';
 import {FlexStyleProps} from '@ui-kitten/components/devsupport';
 import {MenuItem} from "../../types";
@@ -40,7 +39,6 @@ export default function MenuArea(props: Props) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   title: {
     fontSize: 25,

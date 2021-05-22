@@ -24,7 +24,7 @@ export default function AppRouter() {
         exact
         path='/order'
         component={() => (
-          <OrderSummaryScreen orderList={DummyOrderData}/>
+          <OrderSummaryScreen/>
         )}
       />
       <Route
@@ -43,7 +43,7 @@ export default function AppRouter() {
           />
         )}
       />
-      <Route exact path='/menuItem' component={MenuItemScreen}/>
+      <Route exact path='/menuItem' component={() => <MenuItemScreen/>}/>
       <Route exact path='/menu' component={ResturantMenuScreen}/>
     </NativeRouter>
   );
