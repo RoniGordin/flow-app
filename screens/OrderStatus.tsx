@@ -1,5 +1,5 @@
 import { Button, Icon, IconProps, Layout } from "@ui-kitten/components";
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { StyleSheet, Linking, View } from "react-native";
 
 import { Text } from "@ui-kitten/components";
@@ -8,6 +8,7 @@ import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import { AppContext } from "../context/AppContext";
 import { useMutation } from "@apollo/client";
 import { updateLocation } from "../api/queries/updateLocation";
+import { useLocation } from "react-router-native";
 
 
 interface Props {
@@ -32,21 +33,26 @@ export default function OrderStatusScreen(props: Props) {
   } = props;
 
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
+  const {
+    state: { resturantId },
+  } = useLocation();
 
   const [uLocation] = useMutation(updateLocation);
+
 
   const handleLocationUpdate = async () => {
 
     navigator.geolocation.getCurrentPosition(
       async position => {
+        let arrivingTime;
         try {
-          //TODO: integrate with real order id
-          await uLocation({ variables: { id: '2587dd81-7e37-431b-a37f-274123a27e9d', lon: position.coords.longitude, lat: position.coords.latitude } });
-          console.log('success')
+          const res = await uLocation({ variables: { id: currentOrder?.id, lon: position.coords.longitude, lat: position.coords.latitude, resId: resturantId } });
+          arrivingTime = res.data.updateLocation.order.arrivingTime;
         } catch (err) {
+          console.log(err);
           throw new Error('Unable to fetch location')
         }
-        setCurrentOrder({ ...currentOrder, location: position });
+        setCurrentOrder({ ...currentOrder, location: position, arrivingTime });
 
       },
       error => console.log(error),
@@ -55,10 +61,11 @@ export default function OrderStatusScreen(props: Props) {
   };
 
   useEffect(() => {
+
     const interval = setInterval(() => {
       // TODO: check if the order status is finsihed then clear state and interval.
       handleLocationUpdate();
-    }, 60000);
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 
@@ -72,9 +79,10 @@ export default function OrderStatusScreen(props: Props) {
       <TopNavigationAccessoriesShowcase title='' />
       <Layout style={styles.container}>
         <Text style={styles.title} category="h1">
-          Order Status # {orderId}
+          Order Status
         </Text>
-        <OrderProgress timeLeft={timeLeft} orderTime={orderTime} />
+
+        <OrderProgress timeLeft={currentOrder?.arrivingTime} orderTime={currentOrder?.orderTime} />
         <View style={styles.actionsContainer}>
           <Button
             style={styles.contactButton}

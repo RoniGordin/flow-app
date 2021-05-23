@@ -11,6 +11,9 @@ import CollectionTime from "../components/orderSummary/CollectionTime";
 import ArrivalWay from "../components/orderSummary/ArrivalWay";
 import PriceTable from "../components/orderSummary/PriceTable";
 import { AppContext } from "../context/AppContext";
+import { useMutation } from "@apollo/client";
+import { createOrderItem } from "../api/queries/createOrderItem";
+import { createOrder, getCreateOrderData } from "../api/queries/createOrder";
 
 
 interface Props {
@@ -20,16 +23,12 @@ interface Props {
 export default function OrderSummaryScreen(props: Props) {
   const history = useHistory();
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
+  const [cOrder] = useMutation(createOrder);
+  const [cOrderItem] = useMutation(createOrderItem);
 
-  const submitOrder = () => {
-    // TODO: acctually insert new order and get it's id. then save it to state
-    // TODO: calculate arrivalTime based on distance from rest and arrivalWay
-    setCurrentOrder({ id: '1234' });
-    history.push('status')
-  }
 
   const {
-    state: { resturantName, items },
+    state: { resturantName, items, resturantId },
   } = useLocation();
 
   const [visible, setVisible] = useState(false);
@@ -41,6 +40,20 @@ export default function OrderSummaryScreen(props: Props) {
   const removeItem = () => {
     if (items.length == 0) popupAlert();
   };
+
+
+  const submitOrder = async () => {
+    // (userId: string, arrivingTime: string, notes: string, orderTime: string, restaurantId: string, status: string) => {
+    const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', undefined, '', new Date(), resturantId, 'NEW', 1) });
+
+    const id = result.data.createOrder.order.id
+
+    //TODO: Add order items
+    // items.foreach(item => await cOrderItem(item))
+
+    setCurrentOrder({ id, orderTime: new Date() });
+    history.push({ pathname: 'status', state: { resturantId } });
+  }
 
   const popupAlert = () => {
     setVisible(true);

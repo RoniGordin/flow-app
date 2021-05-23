@@ -2,28 +2,31 @@ import React, { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
+import moment from 'moment';
 
 interface Props {
-	timeLeft: number;
-	orderTime: number;
+	timeLeft: Date | undefined;
+	orderTime: Date | undefined;
 }
 
 export default function OrderProgress(props: Props) {
 	const { timeLeft, orderTime } = props;
+	const mTimeLeft = moment(timeLeft);
+	const mOrderTime = moment(orderTime);
 
-	const orderTimeProgress = Math.floor((timeLeft / orderTime) * 100);
-
+	const duration = Math.floor(moment.duration(mTimeLeft.diff(moment())).asMinutes());
+	// TODO: calculate progress!
 	return (
 		<View style={styles.container}>
 			<AnimatedProgressWheel
 				size={150}
 				width={15}
 				color={'#FF5D55'}
-				progress={orderTimeProgress}
+				progress={50}
 				animateFromValue={0}
 				duration={2000}
 			/>
-			<Text style={styles.title} category='h6'>{timeLeft} minutes left</Text>
+			<Text style={styles.title} category='h6'>{duration > 0 ? duration : 0} minutes left</Text>
 		</View>
 	);
 }

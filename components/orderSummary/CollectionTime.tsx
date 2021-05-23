@@ -16,8 +16,9 @@ export default function CollectionTime(props: Props) {
 
 
 const styles = StyleSheet.create({
-    time: {
-        fontSize: 30,
-        fontWeight:'bold',
-    }
+  time: {
+    fontSize: 30,
+    fontWeight: 'bold',
+
+  }
 });

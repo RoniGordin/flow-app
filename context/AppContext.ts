@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 
 export type AppContextType = {
-    currentOrder: { id: string, location?: any } | undefined;
+    currentOrder: { id: string, location?: any, arrivingTime?: Date, orderTime: Date } | undefined;
     setCurrentOrder: (order: any) => void;
 }
 
