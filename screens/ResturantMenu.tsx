@@ -23,7 +23,8 @@ const MENU_CATEGORIES =  [
 
 function ResturantMenu(props: Props) {
   const [value, setValue] = React.useState('');
-  const [menu, setMenu] = useState<MenuItem[]>();
+  const [menu, setMenu] = useState<MenuItem[]>([]);
+  const [visibleMenu, setVisibleMenu] = useState<MenuItem[]>([]);
   const [resturant, setResturant] = useState<Resturant>();
   const history = useHistory();
   const {state: {isBuisnessMode = false, resturantId, items, resturantName}} = useLocation();
@@ -56,24 +57,32 @@ function ResturantMenu(props: Props) {
           .map(node => node.menuItemByItemId)
           .map(itemData => _.omit(itemData, '__typename') as MenuItem));
       setMenu(menuItems);
+
+      setVisibleMenu(menuItems);
     }
   }, [data]);
+
+
+  const onSearchChanged = (nextValue: string) => {
+    setVisibleMenu(menu.filter(item=> item.name.toLowerCase().includes(nextValue.toLowerCase())));
+    setValue(nextValue);
+  };
 
   return (
     <View style={styles.container}>
       <TopNavigationAccessoriesShowcase title={'Resturant Menu'}/>
       <Input
-        placeholder='🔍Search menu'
+        placeholder='🔍Search in menu'
         value={value}
         style={styles.searchStyle}
-        onChangeText={(nextValue) => setValue(nextValue)}
+        onChangeText={onSearchChanged}
       />
       <ScrollView style={styles.menusContainer}>
         <Animated.View  style={{opacity: fadeAnim,}}>
         {
           _.map(MENU_CATEGORIES, c =>
             <MenuArea key={c} title={c} enableAdding={isBuisnessMode}
-                      menuItems={menu?.filter(item => item.category.toLowerCase() === c.toLowerCase())}/>)
+                      menuItems={visibleMenu?.filter(item => item.category.toLowerCase() === c.toLowerCase())}/>)
         }
         </Animated.View>
       </ScrollView>
