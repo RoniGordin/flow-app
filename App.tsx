@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
-import AppRouter from './router';
+import Navigation from './navigation';
 
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -20,7 +20,7 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-
+	const colorScheme = useColorScheme();
 	const isLoadingComplete = useCachedResources();
 	
 	if (!isLoadingComplete) {
@@ -32,7 +32,7 @@ export default function App() {
 					<IconRegistry icons={EvaIconsPack} />
 					<ApplicationProvider {...eva} theme={eva.dark}>
 						<SafeAreaProvider>
-							<AppRouter/>
+							<Navigation colorScheme={colorScheme} />
 						</SafeAreaProvider>
 					</ApplicationProvider>
 				</View>
