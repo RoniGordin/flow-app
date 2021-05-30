@@ -7,6 +7,7 @@ import {View} from "../components/Themed";
 import {Button, Text} from "@ui-kitten/components";
 import {StyleSheet} from 'react-native';
 
+
 interface LocationState {
   userId: string
 }
@@ -16,6 +17,7 @@ export default function ClientMainScreen() {
   const location = useLocation<LocationState>();
   const [user, setUser] = useState<User>();
   const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
+
 
   useEffect(() => {
     if (data?.user) {
