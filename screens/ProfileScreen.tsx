@@ -1,13 +1,24 @@
-import * as React from "react";
+import React, {useEffect, useState} from 'react';
 import { StyleSheet } from "react-native";
+import { useQuery } from "@apollo/client";
 
-import EditScreenInfo from "../components/EditScreenInfo";
+import {
+  getOrdersByUserId,
+  GetOrdersByUserIdData,
+} from "../api/queries/client/getOrdersByUserId";
 import { Text, View } from "../components/Themed";
 
 import UserInfo from "../components/profile/Info";
 import Stats from "../components/profile/Stats";
 
 export default function ProfileScreen() {
+  const { loading, error, data } = useQuery<GetOrdersByUserIdData, { id: string }>(getOrdersByUserId, { variables: { id: "jacob" } });
+
+  useEffect(() => {
+    console.log(data)
+  
+  }, [data]);
+
   return (
     <React.Fragment>
       <UserInfo name="Jacob" />
@@ -17,7 +28,7 @@ export default function ProfileScreen() {
           lightColor="#eee"
           darkColor="rgba(255,255,255,0.1)"
         />
-        <Stats ordersThisMonth={2} restaurants={5} totalOrders={33}/>
+        <Stats ordersThisMonth={2} restaurants={5} totalOrders={33} />
       </View>
     </React.Fragment>
   );
