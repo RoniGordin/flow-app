@@ -12,18 +12,19 @@ interface LocationState {
   userId: string
 }
 
-export default function ClientMainScreen() {
+export default function ClientMainScreen(props: any) {
   const history = useHistory();
   const location = useLocation<LocationState>();
   const [user, setUser] = useState<User>();
-  const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
-
+  //const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
+  const data = props
+  console.log(props)
 
   useEffect(() => {
     if (data?.user) {
       setUser(data.user);
     }
-  }, [data, loading]);
+  }, [data/*, loading*/]);
 
   const viewRestaurants = () => {
     history.push('restaurants');

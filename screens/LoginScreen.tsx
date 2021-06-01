@@ -2,6 +2,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import * as AuthSession from "expo-auth-session";
 import React, { useEffect, useState, useRef } from "react";
+import { useHistory, useLocation } from "react-router-native";
 import { Button, Text } from "@ui-kitten/components";
 import { View } from "../components/Themed";
 import logo from "../assets/images/splash_screen.png";
@@ -25,6 +26,7 @@ export default function LoginScreen() {
     scopes: ["profile", "email"],
   };
   const [request, response, promptAsync] = Google.useAuthRequest(config);
+  const history = useHistory();
 
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
@@ -39,14 +41,14 @@ export default function LoginScreen() {
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      console.log(response);
-      console.log(authentication);
-      console.log(authentication?.accessToken);
+      console.trace(response);
       fetch("https://www.googleapis.com/userinfo/v2/me", {
         headers: { Authorization: `Bearer ${authentication?.accessToken}` },
-      }).then((data) => {
-        console.log("Asd");
+      }).then(response => response.json())
+      .then(data => {
         console.log(data);
+        history.push({pathname: "main",
+        state: { userData: data },})
       });
     }
   }, [response]);
