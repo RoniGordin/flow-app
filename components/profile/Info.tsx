@@ -5,14 +5,16 @@ import { Text, View } from "../Themed";
 
 interface Props {
   name: string;
+  imageUrl:string;
+  email:string;
 }
 
 export default function UserInfo(props: Props) {
-  const { name } = props;
+  const { name, imageUrl } = props;
 
   return (
     <View style={styles.container}>
-      <Avatar source={require("../../assets/images/icon.png")} style={styles.avatar} />
+      <Avatar source={{uri:imageUrl}} style={styles.avatar} />
       <View style={styles.info}>
             <Text style={styles.name}>{name}</Text>
       </View>

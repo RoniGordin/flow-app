@@ -9,6 +9,10 @@ import logo from "../assets/images/splash_screen.png";
 import google from "../assets/images/google.png";
 import { StyleSheet, Image, Animated } from "react-native";
 
+interface LoginProps {
+  onSuccess: Function;
+}
+
 const IOS_CLIENT_ID =
   "805861335802-57erc2aqh4vfpiuhafsv9o5883263nm1.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
@@ -18,7 +22,7 @@ const EXPO_CLIENT_ID =
 const GOOGLE_GET_USER_API =
   "https://www.googleapis.com/oauth2/v1/userinfo?alt=json";
 
-export default function LoginScreen() {
+const LoginScreen = (props: LoginProps) => {
   const config = {
     expoClientId: EXPO_CLIENT_ID,
     iosClientId: IOS_CLIENT_ID,
@@ -26,14 +30,13 @@ export default function LoginScreen() {
     scopes: ["profile", "email"],
   };
   const [request, response, promptAsync] = Google.useAuthRequest(config);
-  const history = useHistory();
 
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 800,
+      duration: 600,
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
@@ -44,12 +47,11 @@ export default function LoginScreen() {
       console.trace(response);
       fetch("https://www.googleapis.com/userinfo/v2/me", {
         headers: { Authorization: `Bearer ${authentication?.accessToken}` },
-      }).then(response => response.json())
-      .then(data => {
-        console.log("got user data from google");
-        history.push({pathname: "restaurants",
-        state: { userData: data },})
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          props.onSuccess(data);
+        });
     }
   }, [response]);
 
@@ -75,7 +77,9 @@ export default function LoginScreen() {
       </Button>
     </Animated.View>
   );
-}
+};
+
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   google: {
