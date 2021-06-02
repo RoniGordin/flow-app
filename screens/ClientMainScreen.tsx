@@ -7,21 +7,25 @@ import {View} from "../components/Themed";
 import {Button, Text} from "@ui-kitten/components";
 import {StyleSheet} from 'react-native';
 
+
 interface LocationState {
   userId: string
 }
 
-export default function ClientMainScreen() {
+export default function ClientMainScreen(props: any) {
   const history = useHistory();
   const location = useLocation<LocationState>();
-  const [user, setUser] = useState<User>();
-  const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
+  const [user, setUser] = useState<User | any>();
+  //const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
+  const data = props.history.location.state.userData
+  console.log(props)
 
   useEffect(() => {
-    if (data?.user) {
-      setUser(data.user);
+    console.log(data)
+    if (data) {
+      setUser(data);
     }
-  }, [data, loading]);
+  }, [data/*, loading*/]);
 
   const viewRestaurants = () => {
     history.push('restaurants');
@@ -31,9 +35,9 @@ export default function ClientMainScreen() {
     <View style={styles.container}>
       <View>
         {
-          user?.username &&
+          user?.given_name &&
 					<Text style={styles.title} category='h1'>
-            {`Welcome ${user.username}!`}
+            {`Welcome ${user.given_name}!`}
 					</Text>
         }
         <View>
