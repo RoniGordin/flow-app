@@ -10,18 +10,25 @@ import { Text, View } from "../components/Themed";
 
 import UserInfo from "../components/profile/Info";
 import Stats from "../components/profile/Stats";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function ProfileScreen() {
   const { loading, error, data } = useQuery<GetOrdersByUserIdData, { id: string }>(getOrdersByUserId, { variables: { id: "jacob" } });
+  const [name, setName] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/icon.a78e4b51.png");
+  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
-    console.log(data)
-  
-  }, [data]);
+    AsyncStorage.getItem("userFullName").then(res=> setName(res? res:""));
+    AsyncStorage.getItem("userEmail").then(res=> setEmail(res? res:""));
+    AsyncStorage.getItem("userPicUrl").then(res=> setImageUrl(res? res:""));
+    
+  }, []);
 
   return (
     <React.Fragment>
-      <UserInfo name="Jacob" />
+      <UserInfo name={name} imageUrl={imageUrl} email={email} />
       <View style={styles.container}>
         <View
           style={styles.separator}
