@@ -78,21 +78,12 @@ function ResturantMenu(props: Props) {
         onChangeText={onSearchChanged}
       />
       <ScrollView style={styles.menusContainer}>
-<<<<<<< HEAD
-        <Animated.View style={{ opacity: fadeAnim, }}>
-          {
-            _.map(MENU_CATEGORIES, c =>
-              <MenuArea key={c} title={c} enableAdding={isBuisnessMode}
-                menuItems={menu?.filter(item => item.category.toLowerCase() === c.toLowerCase())} />)
-          }
-=======
         <Animated.View  style={{opacity: fadeAnim,}}>
         {
           _.map(MENU_CATEGORIES, c =>
             <MenuArea key={c} title={c} enableAdding={isBuisnessMode}
                       menuItems={visibleMenu?.filter(item => item.category.toLowerCase() === c.toLowerCase())}/>)
         }
->>>>>>> 5cd537e2109f0cc51aa88fb6bef67a461f7167fe
         </Animated.View>
       </ScrollView>
       {!isBuisnessMode && (

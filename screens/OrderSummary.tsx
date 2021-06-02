@@ -23,6 +23,7 @@ interface Props {
 export default function OrderSummaryScreen(props: Props) {
   const history = useHistory();
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
+  const [arrivalWay, setArrivalWay] = useState<number | undefined>(undefined);
   const [cOrder] = useMutation(createOrder);
   const [cOrderItem] = useMutation(createOrderItem);
 
@@ -44,7 +45,7 @@ export default function OrderSummaryScreen(props: Props) {
 
   const submitOrder = async () => {
     // (userId: string, arrivingTime: string, notes: string, orderTime: string, restaurantId: string, status: string) => {
-    const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', undefined, '', new Date(), resturantId, 'NEW', 1) });
+    const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', undefined, '', new Date(), resturantId, 'NEW', arrivalWay) });
 
     const id = result.data.createOrder.order.id
 
@@ -68,11 +69,11 @@ export default function OrderSummaryScreen(props: Props) {
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Order Summary" />
       <PriceTable orderList={items} removeItem={removeItem} />
-      <ComponentWrapper component={<ArrivalWay />} title="Arriving Way" />
-      <ComponentWrapper
+      <ComponentWrapper component={<ArrivalWay selectedId={arrivalWay ?? -1} onArrivingWaySelection={(id: number) => setArrivalWay(id)} />} title="Arriving Way" />
+      {/* <ComponentWrapper
         component={<CollectionTime time={6} />}
         title="Estimated Collection Time"
-      />
+      /> */}
       <View style={styles.buttonView}>
         <Button style={styles.button} onPress={() => submitOrder()}>
           Submit Order

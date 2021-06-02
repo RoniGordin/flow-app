@@ -8,7 +8,7 @@ export const createOrder = gql`mutation MyMutation($input: OrderInput!) {
   }
 }`;
 
-export const getCreateOrderData = (userId: string, arrivingTime: Date | undefined, notes: string, orderTime: Date, restaurantId: string, status: string, arrivalWayId: number) => {
+export const getCreateOrderData = (userId: string, arrivingTime: Date | undefined, notes: string, orderTime: Date, restaurantId: string, status: string, arrivalWayId: number | undefined) => {
   return {
     input: {
       userId,

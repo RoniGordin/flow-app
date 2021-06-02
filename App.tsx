@@ -4,7 +4,7 @@ import React from 'react';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import { AppContext } from './context/AppContext'
-import AppRouter from './router';
+
 import Navigation from './navigation';
 
 import * as eva from '@eva-design/eva';
