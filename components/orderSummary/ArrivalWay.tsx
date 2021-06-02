@@ -6,7 +6,7 @@ import { arrivalWays } from '../../constants/ArrivalWays'
 
 interface Props {
   onArrivingWaySelection: (id: number) => void;
-  selectedId: number
+  selectedId: number,
 }
 
 
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
+    marginTop: 10
   },
   button: {
     margin: 2,

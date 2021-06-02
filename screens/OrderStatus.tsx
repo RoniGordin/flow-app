@@ -9,6 +9,7 @@ import { AppContext } from "../context/AppContext";
 import { useMutation } from "@apollo/client";
 import { updateLocation } from "../api/queries/updateLocation";
 import { useLocation } from "react-router-native";
+import { OrderStatusEnum } from "../constants/OrderStatusEnum";
 
 
 interface Props {
@@ -33,6 +34,8 @@ export default function OrderStatusScreen(props: Props) {
   } = props;
 
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>(undefined);
+  const [status, setStatus] = useState(OrderStatusEnum.New);
   const {
     state: { resturantId },
   } = useLocation();
@@ -48,6 +51,13 @@ export default function OrderStatusScreen(props: Props) {
         try {
           const res = await uLocation({ variables: { id: currentOrder?.id, lon: position.coords.longitude, lat: position.coords.latitude, resId: resturantId } });
           arrivingTime = res.data.updateLocation.order.arrivingTime;
+
+          const status = res.data.updateLocation.order.status;
+          setStatus(status);
+          if (status === OrderStatusEnum.Done) {
+            clearInterval(intervalId!);
+            setCurrentOrder(undefined);
+          }
         } catch (err) {
           console.log(err);
           throw new Error('Unable to fetch location')
@@ -66,6 +76,8 @@ export default function OrderStatusScreen(props: Props) {
       // TODO: check if the order status is finsihed then clear state and interval.
       handleLocationUpdate();
     }, 8000);
+
+    setIntervalId(interval);
     return () => clearInterval(interval);
   }, []);
 
