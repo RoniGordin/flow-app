@@ -27,54 +27,42 @@ export default function OrderSummaryScreen(props: Props) {
   const history = useHistory();
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
   const [arrivalWay, setArrivalWay] = useState<number>(1);
-  const [estimatedMinutesToArrival, setEstimatedMinutesToArrival] = useState<number | undefined>(undefined);
+  const [location, setLocation] = useState<{ lat: number, lon: number }
+    | undefined>(undefined);
+  const [visible, setVisible] = useState(false);
   const [cOrder] = useMutation(createOrder);
   const [cOrderItem] = useMutation(createOrderItem);
 
-  const [getEstimatedArrivalTime, { loading, data }] = useLazyQuery(getArrivalTime, { fetchPolicy: "no-cache" });
 
   const {
     state: { resturantName, items, resturantId },
   } = useLocation();
 
-  const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (items.length == 0) popupAlert();
+    initialLocation()
   }, []);
+
+
+
+  const { loading, data } = useQuery(getArrivalTime, {
+    variables: { lon: location?.lon, lat: location?.lat, resId: resturantId, arrivalWay }
+  });
+
+  const arrivalMinutes = React.useMemo(() =>
+    data !== undefined ?
+      Math.floor(moment.duration(moment(data.getArrivalTime).diff(moment())).asMinutes())
+      : undefined
+    , [data]);
 
   const removeItem = () => {
     if (items.length == 0) popupAlert();
   };
 
-  useEffect(() => {
-    calcInitialArrivingTime();
-  }, [arrivalWay]);
-
-  const calcInitialArrivingTime = () => {
+  const initialLocation = () => {
     navigator.geolocation.getCurrentPosition(
       async position => {
-        try {
-          console.log(arrivalWay)
-          // console.log(position.coords.longitude)
-          // console.log(position.coords.latitude)
-          // console.log(resturantId)
-          console.log(data.getArrivalTime)
-          getEstimatedArrivalTime({
-            variables: { lon: position.coords.longitude, lat: position.coords.latitude, resId: resturantId, arrivalWay }
-          });
-          console.log(arrivalWay)
-          console.log(data.getArrivalTime)
-
-          if (data) {
-            setEstimatedMinutesToArrival(moment.duration(moment(data.getArrivalTime).diff(moment())).asMinutes());
-          }
-
-        } catch (err) {
-          console.log(err);
-          throw new Error('Unable to fetch location')
-        }
-
+        setLocation({ lon: position.coords.longitude, lat: position.coords.latitude })
       },
       error => console.log(error),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -82,16 +70,15 @@ export default function OrderSummaryScreen(props: Props) {
   }
 
   const submitOrder = async () => {
-    // (userId: string, arrivingTime: string, notes: string, orderTime: string, restaurantId: string, status: string) => {
-    const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', undefined, '', new Date(), resturantId, OrderStatusEnum.New, arrivalWay) });
+    const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', data.getArrivalTime, '', new Date(), resturantId, OrderStatusEnum.New, arrivalWay) });
 
     const id = result.data.createOrder.order.id
 
     //TODO: Add order items
     // items.foreach(item => await cOrderItem(item))
 
-    setCurrentOrder({ id, orderTime: new Date() });
-    history.push({ pathname: 'status', state: { resturantId } });
+    setCurrentOrder({ id, orderTime: new Date(), arrivingTime: data.getArrivalTime });
+    history.push({ pathname: 'status', state: { resturantId, initialArrivalTime: data.getArrivalTime } });
   }
 
   const popupAlert = () => {
@@ -107,8 +94,10 @@ export default function OrderSummaryScreen(props: Props) {
     <Fragment>
       <TopNavigationAccessoriesShowcase title="Order Summary" />
       <PriceTable orderList={items} removeItem={removeItem} />
-      <ArrivalWay selectedId={arrivalWay} onArrivingWaySelection={(id: number) => setArrivalWay(id)} />
-      {estimatedMinutesToArrival !== undefined && <Text style={styles.arrTime}>{`${Math.floor(estimatedMinutesToArrival)} minutes`}</Text>}
+      <ArrivalWay selectedId={arrivalWay} onArrivingWaySelection={(id: number) => {
+        setArrivalWay(id)
+      }} />
+      {arrivalMinutes !== undefined && <Text style={styles.arrTime}>{`${arrivalMinutes} minutes`}</Text>}
       <View style={styles.buttonView}>
         <Button style={styles.button} onPress={() => submitOrder()}>
           Submit Order

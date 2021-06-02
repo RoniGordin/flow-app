@@ -5,28 +5,31 @@ import AnimatedProgressWheel from 'react-native-progress-wheel';
 import moment from 'moment';
 
 interface Props {
-	timeLeft: Date | undefined;
-	orderTime: Date | undefined;
+	initialTime: Date | undefined;
+	orderTime: Date | undefined,
+	currentTimeLeft: Date | undefined;
 }
 
 export default function OrderProgress(props: Props) {
-	const { timeLeft, orderTime } = props;
-	const mTimeLeft = moment(timeLeft);
-	const mOrderTime = moment(orderTime);
+	const { initialTime, currentTimeLeft, orderTime } = props;
+	const mIntitialTime = moment(initialTime);
+	const mCurrentTimeLeft = moment(currentTimeLeft);
 
-	const duration = Math.floor(moment.duration(mTimeLeft.diff(moment())).asMinutes());
-	// TODO: calculate progress!
+	const currentDuration = Math.floor(moment.duration(mCurrentTimeLeft.diff(moment().utc())).asMinutes());
+	const initialDuration = Math.floor(moment.duration(mIntitialTime.diff(moment(orderTime))).asMinutes());
+	const progress = (1 - (currentDuration / initialDuration)) * 100;
+
 	return (
 		<View style={styles.container}>
 			<AnimatedProgressWheel
 				size={150}
 				width={15}
 				color={'#FF5D55'}
-				progress={50}
+				progress={progress}
 				animateFromValue={0}
 				duration={2000}
 			/>
-			<Text style={styles.title} category='h6'>{duration > 0 ? duration : 0} minutes left</Text>
+			<Text style={styles.title} category='h6'>{currentDuration > 0 ? currentDuration : 0} minutes left</Text>
 		</View>
 	);
 }

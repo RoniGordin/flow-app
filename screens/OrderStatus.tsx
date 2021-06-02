@@ -25,19 +25,15 @@ const PhoneIcon = (props: IconProps) => <Icon {...props} name="phone" />;
 
 export default function OrderStatusScreen(props: Props) {
   const {
-    timeLeft,
-    orderTime,
     phone,
-    orderId,
     onViewOrder,
-    onCloseScreen,
   } = props;
 
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>(undefined);
   const [status, setStatus] = useState(OrderStatusEnum.New);
   const {
-    state: { resturantId },
+    state: { resturantId, initialArrivalTime },
   } = useLocation();
 
   const [uLocation] = useMutation(updateLocation);
@@ -94,7 +90,7 @@ export default function OrderStatusScreen(props: Props) {
           Order Status
         </Text>
 
-        <OrderProgress timeLeft={currentOrder?.arrivingTime} orderTime={currentOrder?.orderTime} />
+        <OrderProgress initialTime={initialArrivalTime} currentTimeLeft={currentOrder?.arrivingTime} orderTime={currentOrder?.orderTime} />
         <View style={styles.actionsContainer}>
           <Button
             style={styles.contactButton}
