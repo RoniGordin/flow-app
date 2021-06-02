@@ -1,5 +1,3 @@
-
-
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import React from 'react';
@@ -7,6 +5,7 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import { AppContext } from './context/AppContext'
 import AppRouter from './router';
+import Navigation from './navigation';
 
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -22,7 +21,7 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-
+	const colorScheme = useColorScheme();
 	const isLoadingComplete = useCachedResources();
 	const [currentOrder, setCurrentOrder] = React.useState(undefined);
 
@@ -37,8 +36,9 @@ export default function App() {
 					<ApplicationProvider {...eva} theme={eva.dark}>
 						<SafeAreaProvider>
 							<AppContext.Provider value={{ currentOrder, setCurrentOrder }}>
-								<AppRouter />
+								<Navigation colorScheme={colorScheme} />
 							</AppContext.Provider>
+
 						</SafeAreaProvider>
 					</ApplicationProvider>
 				</View>
