@@ -2,30 +2,19 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { View } from "../Themed";
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { arrivalWays } from '../../constants/ArrivalWays'
 
 interface Props {
-  //onArrivingWaySelection: () => void;
+  onArrivingWaySelection: (id: number) => void;
+  selectedId: number,
 }
 
-const CarIcon = () => <AntDesign name="car" size={26} color="white" />;
-const BikeIcon = () => (
-  <MaterialCommunityIcons name="bike" size={26} color="white" />
-);
-const BusIcon = () => <FontAwesome5 name="bus" size={26} color="white" />;
-const WalkIcon = () => <FontAwesome5 name="walking" size={26} color="white" />;
 
 export default function ArrivalWay(props: Props) {
   return (
     <View style={styles.container}>
-      <Button style={styles.button} status="info" accessoryLeft={CarIcon} />
-      <Button style={styles.button} status="info" accessoryLeft={BikeIcon} />
-      <Button style={styles.button} status="info" accessoryLeft={BusIcon} />
-      <Button style={styles.button} status="info" accessoryLeft={WalkIcon} />
+      {arrivalWays.map(item => (<Button style={[styles.button, props.selectedId === item.id && { backgroundColor: '#9a383e', borderColor: '#9a383e' }]} key={item.id} status="info" onPress={() => props.onArrivingWaySelection(item.id)} accessoryLeft={item.icon} />))}
+
     </View>
   );
 }
@@ -34,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
+    marginTop: 10
   },
   button: {
     margin: 2,

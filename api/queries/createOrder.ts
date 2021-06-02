@@ -1,4 +1,5 @@
-import {gql} from "@apollo/client/core";
+import { gql } from "@apollo/client/core";
+import { OrderStatusEnum } from "../../constants/OrderStatusEnum";
 
 export const createOrder = gql`mutation MyMutation($input: OrderInput!) {
   createOrder(input: {order: $input}) {
@@ -8,7 +9,7 @@ export const createOrder = gql`mutation MyMutation($input: OrderInput!) {
   }
 }`;
 
-export const getCreateOrderData = (userId: string, arrivingTime: string, notes: string, orderTime: string, restaurantId: string, status: string) => {
+export const getCreateOrderData = (userId: string, arrivingTime: Date | undefined, notes: string, orderTime: Date, restaurantId: string, status: OrderStatusEnum, arrivalWayId: number | undefined) => {
   return {
     input: {
       userId,
@@ -16,7 +17,8 @@ export const getCreateOrderData = (userId: string, arrivingTime: string, notes: 
       notes,
       orderTime,
       restaurantId,
-      status
+      status,
+      arrivalWayId
     }
   }
 };

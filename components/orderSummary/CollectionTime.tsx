@@ -9,15 +9,16 @@ interface Props {
 export default function CollectionTime(props: Props) {
   return (
     <Fragment>
-      <Text style={styles.time}>6 min</Text>
+      <Text style={styles.time}>{Math.floor(props.time)} min</Text>
     </Fragment>
   );
 }
 
 
 const styles = StyleSheet.create({
-    time: {
-        fontSize: 30,
-        fontWeight:'bold',
-    }
+  time: {
+    fontSize: 12,
+    fontWeight: 'bold',
+
+  }
 });
