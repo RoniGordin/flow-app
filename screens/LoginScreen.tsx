@@ -46,8 +46,8 @@ export default function LoginScreen() {
         headers: { Authorization: `Bearer ${authentication?.accessToken}` },
       }).then(response => response.json())
       .then(data => {
-        console.log(data);
-        history.push({pathname: "main",
+        console.log("got user data from google");
+        history.push({pathname: "restaurants",
         state: { userData: data },})
       });
     }
