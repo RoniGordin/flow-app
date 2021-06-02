@@ -15,14 +15,15 @@ interface LocationState {
 export default function ClientMainScreen(props: any) {
   const history = useHistory();
   const location = useLocation<LocationState>();
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | any>();
   //const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
-  const data = props
+  const data = props.history.location.state.userData
   console.log(props)
 
   useEffect(() => {
-    if (data?.user) {
-      setUser(data.user);
+    console.log(data)
+    if (data) {
+      setUser(data);
     }
   }, [data/*, loading*/]);
 
@@ -34,9 +35,9 @@ export default function ClientMainScreen(props: any) {
     <View style={styles.container}>
       <View>
         {
-          user?.username &&
+          user?.given_name &&
 					<Text style={styles.title} category='h1'>
-            {`Welcome ${user.username}!`}
+            {`Welcome ${user.given_name}!`}
 					</Text>
         }
         <View>
