@@ -19,7 +19,7 @@ interface LocationState {
   };
 }
 
-interface Props {}
+interface Props { }
 
 type Changes = Record<string, boolean>;
 
@@ -52,7 +52,7 @@ export default function MenuItemScreen(props: Props) {
   };
 
   const onItemOrder = () => {
-    items.push({ name: item.name, price: 15, changes: changes });
+    items.push({ name: item.name, price: item.price, changes: changes, id: item.id });
     history.goBack();
   };
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 15,
-    fontSize:24
+    fontSize: 24
   },
   divider: {
     flex: 1,
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   description: {
     color: "#C0C0C0",
-    fontSize:18,
-    paddingBottom:15,
+    fontSize: 18,
+    paddingBottom: 15,
   },
 });

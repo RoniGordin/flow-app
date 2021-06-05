@@ -12,7 +12,7 @@ import ArrivalWay from "../components/orderSummary/ArrivalWay";
 import PriceTable from "../components/orderSummary/PriceTable";
 import { AppContext } from "../context/AppContext";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { createOrderItem } from "../api/queries/createOrderItem";
+import { createOrderItem, getCreateOrderItemData } from "../api/queries/createOrderItem";
 import { createOrder, getCreateOrderData } from "../api/queries/createOrder";
 import { OrderStatusEnum } from "../constants/OrderStatusEnum";
 import { getArrivalTime } from "../api/queries/client/getArrivalTime";
@@ -72,12 +72,11 @@ export default function OrderSummaryScreen(props: Props) {
   const submitOrder = async () => {
     const result = await cOrder({ variables: getCreateOrderData('1abdcc1b-8319-4568-a458-3d68b7fac1d2', data.getArrivalTime, '', new Date(), resturantId, OrderStatusEnum.New, arrivalWay) });
 
-    const id = result.data.createOrder.order.id
+    const orderId = result.data.createOrder.order.id
 
-    //TODO: Add order items
-    // items.foreach(item => await cOrderItem(item))
+    await Promise.all(items.map(async (item: any) => cOrderItem({ variables: getCreateOrderItemData(item.id, orderId, Object.keys(item.changes).filter(key => item.changes[key] === true), '') })))
 
-    setCurrentOrder({ id, orderTime: new Date(), arrivingTime: data.getArrivalTime });
+    setCurrentOrder({ id: orderId, orderTime: new Date(), arrivingTime: data.getArrivalTime });
     history.push({ pathname: 'status', state: { resturantId, initialArrivalTime: data.getArrivalTime } });
   }
 
