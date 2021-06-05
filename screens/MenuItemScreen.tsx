@@ -52,7 +52,6 @@ export default function MenuItemScreen(props: Props) {
   };
 
   const onItemOrder = () => {
-    console.log(item)
     items.push({ name: item.name, price: item.price, changes: changes, id: item.id });
     history.goBack();
   };
