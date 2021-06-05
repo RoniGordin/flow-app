@@ -74,7 +74,6 @@ export default function OrderSummaryScreen(props: Props) {
 
     const orderId = result.data.createOrder.order.id
 
-    console.log(items)
     await Promise.all(items.map(async (item: any) => cOrderItem({ variables: getCreateOrderItemData(item.id, orderId, Object.keys(item.changes).filter(key => item.changes[key] === true), '') })))
 
     setCurrentOrder({ id: orderId, orderTime: new Date(), arrivingTime: data.getArrivalTime });
