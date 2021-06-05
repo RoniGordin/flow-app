@@ -5,9 +5,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-native";
 import { Button, Text } from "@ui-kitten/components";
 import { View } from "../components/Themed";
+import {getUserById, GetUserByIdData} from "../api/queries/client/getUserById";
 import logo from "../assets/images/splash_screen.png";
 import google from "../assets/images/google.png";
 import { StyleSheet, Image, Animated } from "react-native";
+import {useQuery} from "@apollo/client";
 
 interface LoginProps {
   onSuccess: Function;
@@ -30,7 +32,7 @@ const LoginScreen = (props: LoginProps) => {
     scopes: ["profile", "email"],
   };
   const [request, response, promptAsync] = Google.useAuthRequest(config);
-
+  var loading, error, data
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
@@ -49,11 +51,22 @@ const LoginScreen = (props: LoginProps) => {
         headers: { Authorization: `Bearer ${authentication?.accessToken}` },
       })
         .then((response) => response.json())
-        .then((data) => {
-          props.onSuccess(data);
+        .then((jsonData) => {
+          const  queryResult = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: jsonData?.id}});
+          loading = queryResult.loading
+          error = queryResult.error
+          data = queryResult.data
+          props.onSuccess(jsonData);
         });
     }
   }, [response]);
+
+  useEffect(() => {
+    console.log(data)
+    if (data) {
+      setUser(data);
+    }
+  }, [data, loading]);
 
   return (
     <Animated.View

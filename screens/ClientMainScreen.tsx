@@ -16,8 +16,8 @@ export default function ClientMainScreen(props: any) {
   const history = useHistory();
   const location = useLocation<LocationState>();
   const [user, setUser] = useState<User | any>();
-  //const {loading, error, data} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || "1abdcc1b-8319-4568-a458-3d68b7fac1d2"}});
   const data = props.history.location.state.userData
+  const {loading, error, userDbObject} = useQuery<GetUserByIdData, { id: string }>(getUserById, {variables: {id: location.state?.userId || data?.id}});
   console.log(props)
 
   useEffect(() => {
