@@ -57,11 +57,11 @@ export default function App() {
           <ApplicationProvider {...eva} theme={eva.dark}>
             <SafeAreaProvider>
               <AppContext.Provider value={{ currentOrder, setCurrentOrder }}>
-                {isLoggedin ? (
-                  <Navigation colorScheme={colorScheme} />
+                <Navigation colorScheme={colorScheme} />
+                {/* {isLoggedin ? (
                 ) : (
                   <LoginScreen onSuccess={onLogin} />
-                )}
+                )} */}
               </AppContext.Provider>
 
             </SafeAreaProvider>
