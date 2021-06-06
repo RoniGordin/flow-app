@@ -8,17 +8,11 @@ export const createUser = gql`mutation MyMutation($input: UserInput!) {
   }
 }`;
 
-export const getCreateUserData = (id: string, privateName: string, lastName: string, email: string, locale: string, fullName:string, picture: string, verifiedEmail: boolean) => {
+export const getCreateUserData = (id: string, username:string) => {
   return {
     input: {
       id,
-      privateName,
-      lastName,
-      email,
-      locale,
-      fullName,
-      picture,
-      verifiedEmail
+      username,
     }
   }
 };
