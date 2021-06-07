@@ -1,33 +1,32 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Text, View } from '../components/Themed';
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import MenuArea from '../components/menu/MenuArea';
 import { Button, Icon, IconProps, Input } from '@ui-kitten/components';
-import { StyleSheet, Animated } from 'react-native';
+import { StyleSheet, Animated, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useHistory, useLocation } from 'react-router-native';
 import { useQuery } from "@apollo/client";
 import { getResturantById, GetResturantByIdData } from "../api/queries/client/getResturantById";
 import { Menu, MenuItem, Resturant } from "../types";
+import { AntDesign } from '@expo/vector-icons'; 
+
+// import MenuData from '../constants/DummyOrderData';
 import _ from 'lodash';
 
 
 interface Props {
 }
 
-const MENU_CATEGORIES = [
-  'Entrees',
-  'Main Courses',
-  'Desserts'
-];
 
 function ResturantMenu(props: Props) {
   const [value, setValue] = React.useState('');
   const [menu, setMenu] = useState<MenuItem[]>([]);
+  // const [menu, setMenu] = useState<MenuItem[]>(MenuData);
   const [visibleMenu, setVisibleMenu] = useState<MenuItem[]>([]);
+  // const [visibleMenu, setVisibleMenu] = useState<MenuItem[]>(MenuData);
   const [resturant, setResturant] = useState<Resturant>();
   const history = useHistory();
-  const { state: { isBuisnessMode = false, resturantId, items, resturantName } } = useLocation();
+  const { state: { resturantId, items, resturantName } } = useLocation();
   const { loading, error, data } = useQuery<GetResturantByIdData, { id: string }>(getResturantById, { variables: { id: resturantId } });
 
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
@@ -68,9 +67,16 @@ function ResturantMenu(props: Props) {
     setValue(nextValue);
   };
 
+  const getGroups = () => {
+    return menu.reduce((groups, item) => ({
+      ...groups,
+      [item.category]: [...(groups[item.category] || []), item]
+    }), {});
+  }
+
   return (
     <View style={styles.container}>
-      <TopNavigationAccessoriesShowcase title={'Resturant Menu'} />
+      <TopNavigationAccessoriesShowcase title='Resturant Menu' subtitle={resturantName + " total menu"} />
       <Input
         placeholder='🔍Search in menu'
         value={value}
@@ -80,20 +86,21 @@ function ResturantMenu(props: Props) {
       <ScrollView style={styles.menusContainer}>
         <Animated.View  style={{opacity: fadeAnim,}}>
         {
-          _.map(MENU_CATEGORIES, c =>
-            <MenuArea key={c} title={c} enableAdding={isBuisnessMode}
-                      menuItems={visibleMenu?.filter(item => item.category.toLowerCase() === c.toLowerCase())}/>)
+           Object.entries(getGroups()).map(([key,value]) => 
+            <MenuArea key={key} title={key} 
+              menuItems={visibleMenu?.filter(item => item.category.toLowerCase() === key.toLowerCase())}/>
+           )           
         }
         </Animated.View>
       </ScrollView>
-      {!isBuisnessMode && (
+      {(items.length != 0)?
         <Button
           style={styles.button}
           onPress={submitOrder}
         >
-          Finish Order
-        </Button>
-      )}
+          <AntDesign name="shoppingcart" size={34} color="white" />
+        </Button>: null}
+        <View style={{height:100}}></View>
     </View>
   );
 }
@@ -114,8 +121,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginTop: 30,
     marginVertical: 2,
+    width:80,
+    height:80,
+    borderRadius:40,
+    position:"absolute",
+    backgroundColor:"#54B0F3",
+    borderColor:"#54B0F3",
+    bottom:90,
+    right:25
   },
   searchStyle: {
     padding: 10,

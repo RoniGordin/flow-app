@@ -40,9 +40,9 @@ export default function App() {
 
   const onLogin = (data: any) => {
     setUserData(data);
-    console.log(data)
     setIsLoggedIn(true);
     AsyncStorage.setItem("userFullName", data?.name);
+    AsyncStorage.setItem("id", data?.id);
     AsyncStorage.setItem("userEmail", data?.email);
     AsyncStorage.setItem("userPicUrl", data?.picture);
   };
@@ -55,12 +55,12 @@ export default function App() {
       <ApolloProvider client={client}>
         <View style={styles.container}>
           <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={eva.dark}>
+          <ApplicationProvider {...eva} theme={eva.light}>
             <SafeAreaProvider>
               <AppContext.Provider value={{ currentOrder, setCurrentOrder }}>
                 {isLoggedin ? (
                   <Navigation colorScheme={colorScheme} />
-                ) : (
+                ):( 
                   <LoginScreen onSuccess={onLogin} />
                 )}
               </AppContext.Provider>

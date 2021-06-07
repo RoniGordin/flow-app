@@ -83,7 +83,7 @@ const LoginScreen = (props: LoginProps) => {
             userData.email
           ),
         })
-          .then((res) => console.log(res))
+          .then((res) => props.onSuccess(userData))
           .catch((err) => console.error(err));
       } else {
         props.onSuccess(userData)

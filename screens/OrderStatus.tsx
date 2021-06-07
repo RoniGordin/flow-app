@@ -1,8 +1,7 @@
 import { Button, Icon, IconProps, Layout } from "@ui-kitten/components";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { StyleSheet, Linking, View } from "react-native";
+import { StyleSheet, Linking, View, Text } from "react-native";
 
-import { Text } from "@ui-kitten/components";
 import OrderProgress from "../components/OrderProgress";
 import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import { AppContext } from "../context/AppContext";
@@ -84,7 +83,7 @@ export default function OrderStatusScreen(props: Props) {
 
   return (
     <Fragment>
-      <TopNavigationAccessoriesShowcase title='' />
+      <TopNavigationAccessoriesShowcase title='Order Status' subtitle='Status of the order' />
       <Layout style={styles.container}>
         <Text style={styles.title} category="h1">
           Order Status

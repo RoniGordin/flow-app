@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Divider, List, ListItem } from "@ui-kitten/components";
 import { MaterialIcons } from "@expo/vector-icons";
-import { StyleSheet } from "react-native";
-import { View, Text } from "../Themed";
+import { StyleSheet,View, Text  } from "react-native";
 
 import { OrderSummaryItem } from "../../types";
 
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     justifyContent: "center",
     fontWeight: "900",
-    color: "white",
+    color: "black",
   },
   row: {
     fontSize: 16,

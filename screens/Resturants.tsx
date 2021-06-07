@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { StyleSheet, Linking, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { Input } from "@ui-kitten/components";
 import ResturantArea from "../components/resturants/ResturantArea";
 import { TopNavigationAccessoriesShowcase } from "../components/TopNavigation";
@@ -8,7 +8,6 @@ import {
   getAllResturants,
   GetAllReturantsData,
 } from "../api/queries/client/getAllReturants";
-import { View, Text } from "../components/Themed";
 import { Resturant } from "../types";
 
 export default function ResturantsScreen() {
@@ -30,8 +29,8 @@ export default function ResturantsScreen() {
 
   return (
     <Fragment>
-      <TopNavigationAccessoriesShowcase title="Restaurants" />
-      <View>
+      <TopNavigationAccessoriesShowcase title="Restaurants" subtitle="All of our restaurants"/>
+      <View style={{flex:1}}>
         <Input
           placeholder="🔍Search restaurant"
           value={value}
@@ -42,6 +41,7 @@ export default function ResturantsScreen() {
           <ResturantArea title="Recommended" resturants={visibleRestaurants} />
           <ResturantArea title="Near you" resturants={visibleRestaurants} />
           <ResturantArea title="Your Latest" resturants={visibleRestaurants} />
+          <View style={{height:100}}></View>
         </ScrollView>
       </View>
     </Fragment>

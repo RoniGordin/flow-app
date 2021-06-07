@@ -1,10 +1,7 @@
 import React from "react";
-import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
 import { useHistory, useLocation } from "react-router-native";
 
-import { Card } from "@ui-kitten/components";
-import { Text, View } from "../Themed";
-import placehloder from "../../assets/images/placeholder.png";
 import { MenuItem } from "../../types";
 
 interface Props {
@@ -44,8 +41,7 @@ export const MenuItemCard = (props: Props) => {
           <Image
             style={styles.tinyLogo}
             source={{
-              //uri:menuItem.imageUrl
-              uri: "https://prod-wolt-venue-images-cdn.wolt.com/s/b1hUH7Nk3LhRNuXEF0qb4F8G0GLn-E4fCTU-wkpY-9U/5ef98a7d81212f58438ca95e/75e8fc72-6b89-11eb-95c9-4a52c3a0b030_karela_00305.jpg",
+              uri:menuItem.imageUrl
             }}
           />
         </View>
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     maxHeight: 45,
   },
   price: {
-    color: "#4A84B8",
+    color: "#36B2F6",
     fontSize: 16,
     fontWeight: "800",
   },

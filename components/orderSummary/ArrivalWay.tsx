@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet,View } from "react-native";
 import { Button } from "@ui-kitten/components";
-import { View } from "../Themed";
 import { arrivalWays } from '../../constants/ArrivalWays'
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 export default function ArrivalWay(props: Props) {
   return (
     <View style={styles.container}>
-      {arrivalWays.map(item => (<Button style={[styles.button, props.selectedId === item.id && { backgroundColor: '#9a383e', borderColor: '#9a383e' }]} key={item.id} status="info" onPress={() => props.onArrivingWaySelection(item.id)} accessoryLeft={item.icon} />))}
+      {arrivalWays.map(item => (<Button style={[styles.button, props.selectedId === item.id && { backgroundColor: '#35709B', borderColor: '#35709B' }]} key={item.id} status="info" onPress={() => props.onArrivingWaySelection(item.id)} accessoryLeft={item.icon} />))}
 
     </View>
   );
@@ -23,7 +22,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 10
+    marginTop: 10,
+    justifyContent:"center"
   },
   button: {
     margin: 2,
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     marginLeft: 7,
     marginRight: 7,
     marginTop: 8,
-    backgroundColor: "#F85F6A",
-    borderColor: "#F85F6A",
+    backgroundColor: "#54B0F3",
+    borderColor: "#54B0F3",
   },
   indicator: {
     justifyContent: "center",

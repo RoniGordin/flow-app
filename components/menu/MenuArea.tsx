@@ -1,9 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {MenuScrollView} from './MenuScrollView';
-import {View, Text} from '../Themed';
 import {Button, Icon, IconProps} from '@ui-kitten/components';
-import {FlexStyleProps} from '@ui-kitten/components/devsupport';
 import {MenuItem} from "../../types";
 
 const ActionIcon = (name: string) => (props: IconProps) => (
@@ -14,12 +12,11 @@ const PlusIcon = ActionIcon('plus');
 
 interface Props {
   title: string;
-  enableAdding: boolean;
   menuItems?: MenuItem[];
 }
 
 export default function MenuArea(props: Props) {
-  const {title, enableAdding, menuItems = []} = props;
+  const {title,  menuItems = []} = props;
 
   const handleAdd = () => {
   };
@@ -28,12 +25,6 @@ export default function MenuArea(props: Props) {
     <View style={styles.container}>
       <View style={styles.titleConatiner}>
         <Text style={styles.title}>{title}</Text>
-        {
-          enableAdding &&
-					<Button accessoryLeft={PlusIcon} onPress={handleAdd}>
-						Add
-					</Button>
-        }
       </View>
       <MenuScrollView menuItems={menuItems}/>
     </View>

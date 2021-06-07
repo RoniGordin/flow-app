@@ -22,10 +22,10 @@ export default function ResturantArea(props: Props) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize:25,
+        fontSize:28,
         marginLeft:5,
         fontWeight:"bold",
-        paddingTop:20
+        paddingTop:30
     }
     
 });

@@ -1,30 +1,42 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { StyleSheet, Text } from "react-native";
 import { useHistory } from "react-router-native";
 
-import { Icon, Layout, TopNavigation, TopNavigationAction, IconProps } from '@ui-kitten/components';
+import {
+  Icon,
+  Layout,
+  TopNavigation,
+  TopNavigationAction,
+  IconProps,
+} from "@ui-kitten/components";
 
 interface Props {
-	title: string;
+  title: string;
+  subtitle:string;
 }
 
-const BackIcon = (props: IconProps) => <Icon {...props} name='arrow-back'/>;
+const BackIcon = (props: IconProps) => (
+  <Icon {...props} name="arrow-back" fill="#696984" />
+);
 
 export const TopNavigationAccessoriesShowcase = (props: Props) => {
-    const { title } = props;
-    const history = useHistory();
-
+  const { title, subtitle } = props;
+  const history = useHistory();
 
   const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={() => history.goBack()}/>
+    <TopNavigationAction icon={BackIcon} onPress={() => history.goBack()} />
   );
 
+  const renderTitle = () => <Text style={styles.navigator}>{title}</Text>;
+
   return (
-    <Layout style={styles.container} level='1'>
+    <Layout level="1">
       <TopNavigation
-        alignment='center'
-        title={title}
+        alignment="center"
+        title={renderTitle}
         accessoryLeft={renderBackAction}
+        style={styles.container}
+        subtitle={subtitle}
       />
     </Layout>
   );
@@ -32,10 +44,14 @@ export const TopNavigationAccessoriesShowcase = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 85,
+    height: 50,
+    backgroundColor: "#EEF3F9",
   },
-  navigator:{
-      fontSize:18,
-      fontWeight:'bold'
-  }
+  navigator: {
+    fontSize: 20,
+    color: "#36B2F6",
+    fontWeight: "bold",
+    width: "100%",
+    textAlign: "center",
+  },
 });

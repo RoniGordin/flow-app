@@ -4,14 +4,14 @@ import {
   Image,
   GestureResponderEvent,
   Animated,
+  View,
+  Text
 } from "react-native";
 import { TopNavigationAccessoriesShowcase } from "../components/TopNavigation";
 import { Button, Divider } from "@ui-kitten/components";
 import { useHistory, useLocation } from "react-router-native";
-import { View, Text } from "../components/Themed";
 import { MenuItem } from "../types";
 import _ from "lodash";
-import { FlexStyleProps } from "@ui-kitten/components/devsupport";
 
 interface LocationState {
   state: {
@@ -26,7 +26,7 @@ type Changes = Record<string, boolean>;
 export default function MenuItemScreen(props: Props) {
   const possibleChanges = ["Tomato", "Onions", "Banana"];
   const {
-    state: { isBuisnessMode, resturantName, items, item },
+    state: { resturantName, items, item },
   } = useLocation();
 
   const [changes, setChanges] = useState<Changes>(
@@ -62,10 +62,7 @@ export default function MenuItemScreen(props: Props) {
       <Animated.View style={{ opacity: fadeAnim }}>
         <View style={styles.container}>
           <Image
-            //source={{uri:item.imageSrc}}
-            source={{
-              uri: "https://prod-wolt-venue-images-cdn.wolt.com/s/b1hUH7Nk3LhRNuXEF0qb4F8G0GLn-E4fCTU-wkpY-9U/5ef98a7d81212f58438ca95e/75e8fc72-6b89-11eb-95c9-4a52c3a0b030_karela_00305.jpg",
-            }}
+            source={{uri:item.imageUrl}}
             style={styles.itemImage}
           />
 
@@ -101,7 +98,7 @@ export default function MenuItemScreen(props: Props) {
             onPress={onItemOrder}
             appearance="filled"
           >
-            Order Item
+            Add Item To Cart
           </Button>
         </View>
       </Animated.View>
@@ -156,9 +153,9 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 2,
     width: 200,
-    marginTop: 30,
-    backgroundColor: "#2ECC71",
-    borderColor: "#2ECC71",
+    marginTop: 40,
+    backgroundColor: "#54B0F3",
+    borderColor: "#54B0F3",
   },
   title: {
     marginTop: 15,
@@ -177,7 +174,7 @@ const styles = StyleSheet.create({
     margin: "1%",
   },
   description: {
-    color: "#C0C0C0",
+    color: "#4C5054",
     fontSize: 18,
     paddingBottom: 15,
   },

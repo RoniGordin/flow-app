@@ -1,8 +1,7 @@
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { MenuItemCard } from "./MenuItemCard";
 import { MenuItem } from "../../types";
-import { Text, View } from "../Themed";
 
 interface Props {
   menuItems: MenuItem[];
