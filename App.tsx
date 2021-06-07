@@ -40,6 +40,7 @@ export default function App() {
 
   const onLogin = (data: any) => {
     setUserData(data);
+    console.log(data)
     setIsLoggedIn(true);
     AsyncStorage.setItem("userFullName", data?.name);
     AsyncStorage.setItem("userEmail", data?.email);

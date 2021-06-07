@@ -13,5 +13,5 @@ query MyQuery($id: UUID!) {
 `;
 
 export type GetUserByIdData = {
-  user: User
+  id: String
 }

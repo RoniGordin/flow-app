@@ -73,8 +73,12 @@ export type ItemInOrder = {
 }
 
 export type User = {
-  address: string;
+  email: string;
   id: string;
-  isAdmin: boolean;
-  username: string;
+  privateName: string;
+  lastName: string;
+  locale: string;
+  fullName: string;
+  picture: string;
+  verifiedEmail: boolean;
 }

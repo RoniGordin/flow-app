@@ -5,9 +5,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-native";
 import { Button, Text } from "@ui-kitten/components";
 import { View } from "../components/Themed";
+import {
+  getUserById,
+  GetUserByIdData,
+} from "../api/queries/client/getUserById";
+import { getCreateUserData, createUser } from "../api/queries/createUser";
 import logo from "../assets/images/splash_screen.png";
 import google from "../assets/images/google.png";
 import { StyleSheet, Image, Animated } from "react-native";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 interface LoginProps {
   onSuccess: Function;
@@ -29,7 +35,16 @@ const LoginScreen = (props: LoginProps) => {
     androidClientId: ANDROID_CLIENT_ID,
     scopes: ["profile", "email"],
   };
+
+  const [userData, setUserData] = useState<any>({});
   const [request, response, promptAsync] = Google.useAuthRequest(config);
+  /*const [getUser, { loading, data }] =
+    useLazyQuery<GetUserByIdData, { id: string }>(getUserById);*/
+
+  const [getUser, { called, loading, data }] = useLazyQuery(getUserById);
+
+  //const [gUser] = useMutation(getUserById);
+  const [cUser] = useMutation(createUser);
 
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
@@ -49,11 +64,37 @@ const LoginScreen = (props: LoginProps) => {
         headers: { Authorization: `Bearer ${authentication?.accessToken}` },
       })
         .then((response) => response.json())
-        .then((data) => {
-          props.onSuccess(data);
+        .then((jsonData) => {
+          let id = jsonData?.id + "00000000000";
+          jsonData.id = id;
+          setUserData(jsonData);
+          getUser({ variables: { id: id } });
+          // props.onSuccess(jsonData);
         });
     }
   }, [response]);
+
+  useEffect(() => {
+    if (called == true) {
+      if (typeof data === "undefined") {
+        cUser({
+          variables: getCreateUserData(
+            userData.id + "00000000000",
+            userData.email
+          ),
+        })
+          .then((res) => console.log(res))
+          .catch((err) => console.error(err));
+      } else {
+        props.onSuccess(userData)
+      }
+    }
+  }, [data]);
+
+  const login = () => {
+    promptAsync();
+    //getUser({ variables: userData?.id })
+  };
 
   return (
     <Animated.View
@@ -68,7 +109,7 @@ const LoginScreen = (props: LoginProps) => {
       <Button
         disabled={!request}
         onPress={() => {
-          promptAsync();
+          login();
         }}
         style={styles.btn}
         accessoryLeft={() => <Image source={google} style={styles.google} />}
