@@ -98,7 +98,7 @@ export default function MenuItemScreen(props: Props) {
             onPress={onItemOrder}
             appearance="filled"
           >
-            Add Item To Cart
+            Add to cart
           </Button>
         </View>
       </Animated.View>
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
   },
   possibleChange: {
     margin: "1%",
+    borderRadius:15
   },
   description: {
     color: "#4C5054",

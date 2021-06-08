@@ -10,6 +10,9 @@ import {
 import UserInfo from "../components/profile/Info";
 import Stats from "../components/profile/Stats";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
+import { OrderCard } from '../components/profile/order';
+import { Order } from '../types';
 
 
 export default function ProfileScreen() {
@@ -17,7 +20,12 @@ export default function ProfileScreen() {
   const [name, setName] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/icon.a78e4b51.png");
   const [email, setEmail] = useState<string>("");
+  const [orders, setOrders] = useState<any[]>([]);
   const [id, setId] = useState<string>("");
+
+  const [ordersThisMonth, setOrdersThisMonth] = useState<number>(0);
+  const [places, setPlaces] = useState<number>(0);
+  const [totalOrders, setTotalOrders] = useState<number>(0);
 
   useEffect(() => {
     AsyncStorage.getItem("userFullName").then(res=> setName(res? res:""));
@@ -27,9 +35,36 @@ export default function ProfileScreen() {
     
   }, []);
 
+  const getNumberOfPlaces = (orderList:[]) => {
+    let flags = []
+    for( let i=0; i<orderList.length; i++) {
+      if(flags.indexOf(orderList[i].restaurantId) === -1) {
+        flags.push(orderList[i].restaurantId)
+      }
+    }
+    return flags.length
+  };
+
+  const getNumberOfOrdersThisMonth = (orderList:[]) => {
+    let currentDate = new Date();
+    let counter = 0;
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    if(typeof orderList != "undefined")
+      orderList.map(item=> Date.parse(item.orderTime) > currentDate.getTime() ? counter++ : null);
+    return counter;
+  };
+
   useEffect(() => {
-    console.log(data)
-    
+    let sorted = data?.user?.ordersByUserId.nodes.sort(function(a,b){
+      return (Date.parse(b.orderTime)) - (Date.parse(a.orderTime))
+    });
+
+    setOrders(sorted);
+
+    setTotalOrders(sorted?.length);
+    setOrdersThisMonth(getNumberOfOrdersThisMonth(sorted));
+    setPlaces(getNumberOfPlaces(sorted))
+
   }, [data]);
 
   return (
@@ -39,7 +74,13 @@ export default function ProfileScreen() {
         <View
           style={styles.separator}
         />
-        <Stats ordersThisMonth={2} restaurants={5} totalOrders={33} />
+        <Stats ordersThisMonth={ordersThisMonth} restaurants={places} totalOrders={totalOrders} />
+        <ScrollView>
+          {orders?.map((item,index)=>            
+            <OrderCard order={item} key={index}  />
+          )}
+        </ScrollView>
+        <View style={{height:100}}></View>
       </View>
     </React.Fragment>
   );
@@ -48,6 +89,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
+    flex:1
   },
   title: {
     fontSize: 20,
