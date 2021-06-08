@@ -29,20 +29,20 @@ export const ResturantCard = (props: Props) => {
 
   return (
     <React.Fragment>
-    <Card style={styles.card} onPress={onResturantClick}>
-      <Image
-        style={styles.tinyLogo}
-        //source={{uri:imageUrl}}
-        source={{
-          uri:resturant.imageUrl
-          // uri: "https://prod-wolt-venue-images-cdn.wolt.com/s/b1hUH7Nk3LhRNuXEF0qb4F8G0GLn-E4fCTU-wkpY-9U/5ef98a7d81212f58438ca95e/75e8fc72-6b89-11eb-95c9-4a52c3a0b030_karela_00305.jpg",
-        }}
-      />
-      <Text style={styles.name}>{resturant.name}</Text>
-      <Text style={styles.address}>{resturant.address}</Text>
-      <Text style={styles.hours}>{resturant.openingHours}</Text>
-    </Card>
-  </React.Fragment>
+      <Card style={styles.card} onPress={onResturantClick}>
+        <Image
+          style={styles.tinyLogo}
+          source={{
+            uri: resturant.imageUrl
+              ? resturant.imageUrl
+              : "https://prod-wolt-venue-images-cdn.wolt.com/s/b1hUH7Nk3LhRNuXEF0qb4F8G0GLn-E4fCTU-wkpY-9U/5ef98a7d81212f58438ca95e/75e8fc72-6b89-11eb-95c9-4a52c3a0b030_karela_00305.jpg",
+          }}
+        />
+        <Text style={styles.name}>{resturant.name}</Text>
+        <Text style={styles.address}>{resturant.address}</Text>
+        <Text style={styles.hours}>{resturant.openingHours}</Text>
+      </Card>
+    </React.Fragment>
   );
 };
 
@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     zIndex: 2,
     marginVertical: -175,
     fontSize: 18,
-    fontWeight:"bold",
+    fontWeight: "bold",
     width: 150,
-    color:"#393939"
+    color: "#393939",
   },
   address: {
     position: "absolute",
@@ -78,9 +78,9 @@ const styles = StyleSheet.create({
     zIndex: 2,
     marginVertical: -190,
     fontSize: 16,
-    fontWeight:"600",
+    fontWeight: "600",
     width: 150,
-    color:"#525456"
+    color: "#525456",
   },
   hours: {
     position: "absolute",
@@ -89,6 +89,6 @@ const styles = StyleSheet.create({
     marginVertical: -210,
     fontSize: 16,
     width: 150,
-    color:"#8E8E8E"
+    color: "#8E8E8E",
   },
 });

@@ -8,6 +8,7 @@ export const getAllResturants = gql`query MyQuery {
       id
       name
       openingHours
+      imageUrl
     }
   }
 }`;
