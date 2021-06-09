@@ -7,7 +7,7 @@ import { TopNavigationAccessoriesShowcase } from '../components/TopNavigation';
 import { AppContext } from "../context/AppContext";
 import { useMutation } from "@apollo/client";
 import { updateLocation } from "../api/queries/updateLocation";
-import { useLocation } from "react-router-native";
+import { useHistory, useLocation } from "react-router-native";
 import { OrderStatusEnum } from "../constants/OrderStatusEnum";
 
 
@@ -27,7 +27,7 @@ export default function OrderStatusScreen(props: Props) {
     phone,
     onViewOrder,
   } = props;
-
+  const history = useHistory();
   const { currentOrder, setCurrentOrder } = useContext(AppContext);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>(undefined);
   const [status, setStatus] = useState(OrderStatusEnum.New);
@@ -52,6 +52,7 @@ export default function OrderStatusScreen(props: Props) {
           if (status === OrderStatusEnum.Done) {
             clearInterval(intervalId!);
             setCurrentOrder(undefined);
+            history.push({ pathname: '/' });
           }
         } catch (err) {
           console.log(err);
