@@ -1,10 +1,7 @@
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import * as AuthSession from "expo-auth-session";
 import React, { useEffect, useState, useRef } from "react";
-import { useHistory, useLocation } from "react-router-native";
-import { Button, Text } from "@ui-kitten/components";
-import { View } from "../components/Themed";
+import { Button } from "@ui-kitten/components";
 import {
   getUserById,
   GetUserByIdData,
@@ -37,6 +34,7 @@ const LoginScreen = (props: LoginProps) => {
   };
 
   const [userData, setUserData] = useState<any>({});
+
   const [request, response, promptAsync] = Google.useAuthRequest(config);
   /*const [getUser, { loading, data }] =
     useLazyQuery<GetUserByIdData, { id: string }>(getUserById);*/
@@ -51,7 +49,7 @@ const LoginScreen = (props: LoginProps) => {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 600,
+      duration: 200,
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
@@ -76,16 +74,18 @@ const LoginScreen = (props: LoginProps) => {
 
   useEffect(() => {
     if (called == true) {
-      if (typeof data === "undefined") {
+      console.log(data)
+      if (typeof data === "undefined" || data?.user == null) {
         cUser({
           variables: getCreateUserData(
-            userData.id + "00000000000",
+            userData.id,
             userData.email
           ),
         })
           .then((res) => props.onSuccess(userData))
           .catch((err) => console.error(err));
       } else {
+        
         props.onSuccess(userData)
       }
     }
