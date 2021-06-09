@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
-import moment from 'moment';
+import moment, { duration } from 'moment';
 
 interface Props {
 	initialTime: Date | undefined;
@@ -22,14 +22,15 @@ export default function OrderProgress(props: Props) {
 	return (
 		<View style={styles.container}>
 			<AnimatedProgressWheel
-				size={150}
-				width={15}
-				color={'#FF5D55'}
+				size={200}
+				width={20}
+				color={'#54B0F3'}
+				backgroundColor={'#e4e4e4'}
 				progress={progress}
 				animateFromValue={0}
 				duration={2000}
 			/>
-			<Text style={styles.title} category='h6'>{currentDuration > 0 ? currentDuration : 0} minutes left</Text>
+			<Text style={styles.title} category='h5'>{currentDuration > 0 ? currentDuration : 0} minutes left</Text>
 		</View>
 	);
 }
@@ -41,6 +42,10 @@ const styles = StyleSheet.create({
 		margin: 15,
 	},
 	title: {
-		marginTop: 5,
+		marginTop: 8,
+		backgroundColor: '#e4e4e4',
+		color: '#9a9a9a',
+		padding: '2%',
+		borderRadius: 15,
 	},
 });

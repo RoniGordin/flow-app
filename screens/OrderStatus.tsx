@@ -85,12 +85,10 @@ export default function OrderStatusScreen(props: Props) {
     <Fragment>
       <TopNavigationAccessoriesShowcase title='Order Status' subtitle='Status of the order' />
       <Layout style={styles.container}>
-        <Text style={styles.title} category="h1">
-          Order Status
-        </Text>
+
 
         <OrderProgress initialTime={initialArrivalTime} currentTimeLeft={currentOrder?.arrivingTime} orderTime={currentOrder?.orderTime} />
-        <View style={styles.actionsContainer}>
+        {/* <View style={styles.actionsContainer}>
           <Button
             style={styles.contactButton}
             accessoryLeft={PhoneIcon}
@@ -101,7 +99,7 @@ export default function OrderStatusScreen(props: Props) {
           <Button style={styles.orderButton} onPress={onViewOrder}>
             View Order
           </Button>
-        </View>
+        </View> */}
       </Layout>
     </Fragment>
   );
