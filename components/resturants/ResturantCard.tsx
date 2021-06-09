@@ -40,7 +40,7 @@ export const ResturantCard = (props: Props) => {
         />
         <Text style={styles.name}>{resturant.name}</Text>
         <Text style={styles.address}>{resturant.address}</Text>
-        <Text style={styles.hours}>{resturant.openingHours}</Text>
+        <Text style={styles.hours}>{`${resturant.openingHours[0]}-${resturant.openingHours[1]}`}</Text>
       </Card>
     </React.Fragment>
   );
