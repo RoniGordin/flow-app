@@ -21,6 +21,7 @@ import { OrderStatusEnum } from "../constants/OrderStatusEnum";
 import { getArrivalTime } from "../api/queries/client/getArrivalTime";
 import moment from "moment";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import arrivalTimeText from "../constants/arrivalTimeText";
 
 interface Props {
   orderList: OrderItem[];
@@ -58,10 +59,10 @@ export default function OrderSummaryScreen(props: Props) {
     () =>
       data !== undefined
         ? Math.floor(
-            moment
-              .duration(moment(data.getArrivalTime).diff(moment()))
-              .asMinutes()
-          )
+          moment
+            .duration(moment(data.getArrivalTime).diff(moment()))
+            .asMinutes()
+        )
         : undefined,
     [data]
   );
@@ -141,7 +142,7 @@ export default function OrderSummaryScreen(props: Props) {
 
   return (
     <Fragment>
-      <TopNavigationAccessoriesShowcase title="Order Summary" subtitle="The entire summary of your order"/>
+      <TopNavigationAccessoriesShowcase title="Order Summary" subtitle="The entire summary of your order" />
       <PriceTable orderList={items} removeItem={removeItem} />
       <ArrivalWay
         selectedId={arrivalWay}
@@ -150,7 +151,7 @@ export default function OrderSummaryScreen(props: Props) {
         }}
       />
       {arrivalMinutes !== undefined && (
-        <Text style={styles.arrTime}>{`${arrivalMinutes} minutes`}</Text>
+        <Text style={styles.arrTime}>{arrivalTimeText(arrivalMinutes)}</Text>
       )}
       <View style={styles.buttonView}>
         <Button style={styles.button} onPress={() => submitOrder()}>

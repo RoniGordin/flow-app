@@ -3,6 +3,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import moment, { duration } from 'moment';
+import arrivalTimeText from '../constants/arrivalTimeText';
 
 interface Props {
 	initialTime: Date | undefined;
@@ -30,7 +31,7 @@ export default function OrderProgress(props: Props) {
 				animateFromValue={0}
 				duration={2000}
 			/>
-			<Text style={styles.title} category='h5'>{currentDuration > 0 ? currentDuration : 0} minutes left</Text>
+			{currentDuration > 0 && <Text style={styles.title}>{arrivalTimeText(currentDuration)}</Text>}
 		</View>
 	);
 }
