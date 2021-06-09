@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {MenuScrollView} from './MenuScrollView';
-import {Button, Icon, IconProps} from '@ui-kitten/components';
-import {MenuItem} from "../../types";
+import { StyleSheet, View, Text } from 'react-native';
+import { MenuScrollView } from './MenuScrollView';
+import { Button, Icon, IconProps } from '@ui-kitten/components';
+import { MenuItem } from "../../types";
 
 const ActionIcon = (name: string) => (props: IconProps) => (
   <Icon name={name} {...props} />
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function MenuArea(props: Props) {
-  const {title,  menuItems = []} = props;
+  const { title, menuItems = [] } = props;
 
   const handleAdd = () => {
   };
@@ -24,9 +24,9 @@ export default function MenuArea(props: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.titleConatiner}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{title.replace('_', ' ')}</Text>
       </View>
-      <MenuScrollView menuItems={menuItems}/>
+      <MenuScrollView menuItems={menuItems} />
     </View>
   );
 }
