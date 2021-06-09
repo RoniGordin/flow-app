@@ -74,7 +74,6 @@ const LoginScreen = (props: LoginProps) => {
 
   useEffect(() => {
     if (called == true) {
-      console.log(data)
       if (typeof data === "undefined" || data?.user == null) {
         cUser({
           variables: getCreateUserData(
