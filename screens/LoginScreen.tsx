@@ -19,7 +19,8 @@ interface LoginProps {
 const IOS_CLIENT_ID =
   "805861335802-57erc2aqh4vfpiuhafsv9o5883263nm1.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
-  "805861335802-57erc2aqh4vfpiuhafsv9o5883263nm1.apps.googleusercontent.com";
+  // "805861335802-54mh9s7qpus91hrmsofsgs7omo7sgjsa.apps.googleusercontent.com";
+  "805861335802-54mh9s7qpus91hrmsofsgs7omo7sgjsa.apps.googleusercontent.com"
 const EXPO_CLIENT_ID =
   "805861335802-57erc2aqh4vfpiuhafsv9o5883263nm1.apps.googleusercontent.com";
 const GOOGLE_GET_USER_API =
@@ -35,7 +36,7 @@ const LoginScreen = (props: LoginProps) => {
 
   const [userData, setUserData] = useState<any>({});
 
-  const [request, response, promptAsync] = Google.useAuthRequest(config);
+  // const [request, response, promptAsync] = Google.useAuthRequest(config);
   /*const [getUser, { loading, data }] =
     useLazyQuery<GetUserByIdData, { id: string }>(getUserById);*/
 
@@ -47,6 +48,10 @@ const LoginScreen = (props: LoginProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
+    getUser({ variables: { id: "11009485-1426-6168-3000-100000000000" } })
+  }, [])
+
+  useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 200,
@@ -54,25 +59,29 @@ const LoginScreen = (props: LoginProps) => {
     }).start();
   }, [fadeAnim]);
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      const { authentication } = response;
-      console.trace(response);
-      fetch("https://www.googleapis.com/userinfo/v2/me", {
-        headers: { Authorization: `Bearer ${authentication?.accessToken}` },
-      })
-        .then((response) => response.json())
-        .then((jsonData) => {
-          let id = jsonData?.id + "00000000000";
-          jsonData.id = id;
-          setUserData(jsonData);
-          getUser({ variables: { id: id } });
-          // props.onSuccess(jsonData);
-        });
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   // if (response?.type === "success") {
+  //     alert("asd")
+  //     const { authentication } = response;
+  //     console.trace(response);
+  //     fetch("https://www.googleapis.com/userinfo/v2/me", {
+  //       headers: { Authorization: `Bearer ${authentication?.accessToken}` },
+  //     })
+  //       .then((response) => response.json())
+  //       .then((jsonData) => {
+  //         let id = jsonData?.id + "00000000000";
+  //         jsonData.id = id;
+  //         setUserData(jsonData);
+  //         getUser({ variables: { id: id } });
+  //         // props.onSuccess(jsonData);
+  //       });
+  //   } else {
+  //     alert(response)
+  //   }
+  // }, [response]);
 
   useEffect(() => {
+    console.log(data)
     if (called == true) {
       if (typeof data === "undefined" || data?.user == null) {
         cUser({
@@ -91,7 +100,7 @@ const LoginScreen = (props: LoginProps) => {
   }, [data]);
 
   const login = () => {
-    promptAsync();
+    // promptAsync();
     //getUser({ variables: userData?.id })
   };
 
@@ -105,7 +114,7 @@ const LoginScreen = (props: LoginProps) => {
       }}
     >
       <Image source={logo} style={styles.pic} />
-      <Button
+      {/* <Button
         disabled={!request}
         onPress={() => {
           login();
@@ -114,7 +123,7 @@ const LoginScreen = (props: LoginProps) => {
         accessoryLeft={() => <Image source={google} style={styles.google} />}
       >
         Sign in with Google
-      </Button>
+      </Button> */}
     </Animated.View>
   );
 };

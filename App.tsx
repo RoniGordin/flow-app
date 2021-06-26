@@ -13,6 +13,12 @@ import { AppRegistry } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider, DefaultOptions } from '@apollo/client';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreen from './screens/LoginScreen';
+import { useEffect } from 'react';
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import {
+  getUserById,
+  GetUserByIdData,
+} from "./api/queries/client/getUserById";
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -37,13 +43,36 @@ export default function App() {
   const [currentOrder, setCurrentOrder] = React.useState(undefined);
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const [userData, setUserData] = useState<Object>({});
+  const [getUser, { called, loading, data }] = useLazyQuery(getUserById);
 
+
+  // useEffect(() => {
+  //   getUser({ variables: { id: "11009485-1426-6168-3000-100000000000" } })
+  // }, [])
+
+  // useEffect(() => {
+  //   if (called == true) {
+  //     if (typeof data === "undefined" || data?.user == null) {
+  //       // cUser({
+  //       //   variables: getCreateUserData(
+  //       //     userData.id,
+  //       //     userData.email
+  //       //   ),
+  //       // })
+  //       //   .then((res) => onLogin(userData))
+  //       //   .catch((err) => console.error(err));
+  //       alert("user not found")
+  //     } else {
+  //       onLogin(userData)
+  //     }
+  //   }
+  // }, [data])
   const onLogin = (data: any) => {
     setUserData(data);
     setIsLoggedIn(true);
-    AsyncStorage.setItem("userFullName", data?.name);
-    AsyncStorage.setItem("id", data?.id);
-    AsyncStorage.setItem("userEmail", data?.email);
+    AsyncStorage.setItem("userFullName", data?.name ?? "matan cohen");
+    AsyncStorage.setItem("id", data?.id ?? "11009485-1426-6168-3000-100000000000"); 
+    AsyncStorage.setItem("userEmail", data?.username ?? "matan21197@gmail.com");
     AsyncStorage.setItem("userPicUrl", data?.picture);
   };
 
@@ -61,7 +90,8 @@ export default function App() {
                 {isLoggedin ? (
                   <Navigation colorScheme={colorScheme} />
                 ):( 
-                  <LoginScreen onSuccess={onLogin} />
+                   <LoginScreen onSuccess={onLogin} />
+                  // <div></div>
                 )}
               </AppContext.Provider>
 

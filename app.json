@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "flow-app",
-    "slug": "flow-app",
+    "name": "flow",
+    "slug": "flow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "flow",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash_screen.png",
@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-	  "package": "com.flow.app"
+	  "package": "com.flow.flow"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

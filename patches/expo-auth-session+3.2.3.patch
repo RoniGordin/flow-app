@@ -1,0 +1,21 @@
+diff --git a/node_modules/expo-auth-session/src/providers/Google.ts b/node_modules/expo-auth-session/src/providers/Google.ts
+index f62caf3..e8742d1 100644
+--- a/node_modules/expo-auth-session/src/providers/Google.ts
++++ b/node_modules/expo-auth-session/src/providers/Google.ts
+@@ -356,7 +356,7 @@ export function useAuthRequest(
+         }
+       });
+     } else {
+-      setFullResult(fullResult ?? result);
++      setFullResult(result);
+     }
+     return () => {
+       isMounted = false;
+@@ -369,6 +369,7 @@ export function useAuthRequest(
+     config.scopes?.join(','),
+     request?.codeVerifier,
+     fullResult,
++    result
+   ]);
+ 
+   return [request, fullResult, promptAsync];
